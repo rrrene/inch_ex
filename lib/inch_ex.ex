@@ -11,10 +11,10 @@ defmodule InchEx do
   end
 
   @doc false
-  def generate_docs(project, version, options) when is_binary(project) and is_binary(version) and is_list(options) do
+  def generate_docs(project, version, args, options) when is_binary(project) and is_binary(version) and is_list(options) do
     config = build_config(project, version, options)
     docs = config.retriever.docs_from_dir(config.source_beam, config)
-    config.formatter.run(docs, config)
+    config.formatter.run(docs, args, config)
   end
 
   defp build_config(project, version, options) do

@@ -6,12 +6,12 @@ defmodule InchEx.Docs.Formatter do
   @doc """
   Generate JSON documentation for the given modules
   """
-  def run(modules, config)  do
+  def run(modules, args, config)  do
     output = Path.expand(config.output)
     :ok = File.mkdir_p output
 
     list = all(modules) # |> Enum.map(fn(x) -> Map.to_list(x) end)
-    data = [objects: list]
+    data = [args: args, objects: list]
 
     if System.get_env("TRAVIS") == "true" do
       data = Keyword.put(data, :travis, true)

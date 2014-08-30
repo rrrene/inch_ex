@@ -5,11 +5,13 @@ defmodule InchEx.Reporter.Local do
 
       export INCH_PATH=/home/rrrene/projects/inch
   """
-  def run(filename) do
+  def run(filename, args \\ []) do
     if local_inch? do
-      local_inch(["--language=elixir", "--read-from-dump=#{filename}"])
+      local_inch(args ++ ["--language=elixir", "--read-from-dump=#{filename}"])
     else
-      raise "Inch not installed."
+      data = File.read!(filename)
+      {:ok, {_, _, body}} = :httpc.request(:post, {'http://localhost:3000/api/cli', [], 'application/json', data}, [], [])
+      IO.puts body
     end
   end
 

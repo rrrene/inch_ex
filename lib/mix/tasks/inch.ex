@@ -7,18 +7,12 @@ defmodule Mix.Tasks.Inch do
   @recursive true
 
   @doc false
-  def run(args, config \\ Mix.Project.config, generator \\ &InchEx.generate_docs/3, reporter \\ InchEx.Reporter.Local) do
+  def run(args, config \\ Mix.Project.config, generator \\ &InchEx.generate_docs/4, reporter \\ InchEx.Reporter.Local) do
     Mix.Task.run "compile"
-
-    { cli_opts, args, _ } = OptionParser.parse(args, aliases: [o: :output], switches: [output: :string])
-
-    if args != [] do
-      raise Mix.Error, message: "Extraneous arguments on the command line"
-    end
 
     project = (config[:name] || config[:app]) |> to_string
     version = config[:version] || "dev"
-    options = Keyword.merge(get_docs_opts(config), cli_opts)
+    options = get_docs_opts(config)
 
     if source_url = config[:source_url] do
       options = Keyword.put(options, :source_url, source_url)
@@ -40,8 +34,8 @@ defmodule Mix.Tasks.Inch do
     options = Keyword.put_new(options, :retriever, InchEx.Docs.Retriever)
     options = Keyword.put_new(options, :formatter, InchEx.Docs.Formatter)
 
-    generator.(project, version, options)
-      |> reporter.run
+    generator.(project, version, args, options)
+      |> reporter.run(args)
   end
 
   defp get_docs_opts(config) do
