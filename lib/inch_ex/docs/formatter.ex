@@ -11,7 +11,7 @@ defmodule InchEx.Docs.Formatter do
     :ok = File.mkdir_p output
 
     list = all(modules) # |> Enum.map(fn(x) -> Map.to_list(x) end)
-    data = [args: args, objects: list]
+    data = [language: "elixir", args: args, objects: list]
 
     if System.get_env("TRAVIS") == "true" do
       data = Keyword.put(data, :travis, true)
