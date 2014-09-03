@@ -1,4 +1,6 @@
 defmodule InchEx.Reporter.Local do
+  @cli_api_end_point 'http://localhost:3000/api/cli'
+
   @doc """
     Runs inch locally, if installed. If you want to force usage of a particular
     inch installation, set INCH_PATH environment variable to it.
@@ -10,13 +12,19 @@ defmodule InchEx.Reporter.Local do
       local_inch(args ++ ["--language=elixir", "--read-from-dump=#{filename}"])
     else
       data = File.read!(filename)
-      {:ok, {_, _, body}} = :httpc.request(:post, {'http://localhost:3000/api/cli', [], 'application/json', data}, [], [])
-      IO.puts body
+      case :httpc.request(:post, {inch_cli_api_endpoint, [], 'application/json', data}, [], []) do
+        {:ok, {_, _, body}} -> handle_output(body)
+        {:error, {:failed_connect, _, _}} -> IO.puts "Connect failed."
+        _ -> IO.puts "Inch could not reach #{inch_cli_api_endpoint}."
+      end
     end
   end
 
-  defp local_inch? do
-    !nil?(inch_cmd)
+  defp inch_cli_api_endpoint do
+    case System.get_env("INCH_CLI_API") do
+      nil -> @cli_api_end_point
+      url -> url
+    end
   end
 
   defp inch_cmd do
@@ -24,6 +32,10 @@ defmodule InchEx.Reporter.Local do
       nil -> System.find_executable("inch")
       dir -> Path.join([dir, "bin", "inch"])
     end
+  end
+
+  defp local_inch? do
+    !nil?(inch_cmd)
   end
 
   defp local_inch(args \\ []) do
@@ -45,12 +57,11 @@ defmodule InchEx.Reporter.Local do
   end
 
   defp handle_output(output) do
-    IO.puts output
+    IO.write output
   end
 
   defp handle_error(output) do
     IO.puts output
     IO.puts "Inch exited with non-zero result"
   end
-
 end
