@@ -142,7 +142,7 @@ defmodule InchEx.Docs.Retriever do
     behaviour = Dict.get(cb_impls, { name, arity })
 
     doc =
-      if nil?(doc) && behaviour do
+      if is_nil(doc) && behaviour do
         "Callback implementation of `#{inspect behaviour}.#{name}/#{arity}`."
       else
         doc

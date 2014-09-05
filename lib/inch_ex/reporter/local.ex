@@ -35,7 +35,7 @@ defmodule InchEx.Reporter.Local do
   end
 
   defp local_inch? do
-    !nil?(inch_cmd)
+    !is_nil(inch_cmd)
   end
 
   defp local_inch(args \\ []) do

@@ -5,7 +5,7 @@ defmodule InchEx.Mixfile do
     [
       app: :inch_ex,
       version: "0.0.1",
-      elixir: "~> 0.15.2-dev",
+      elixir: "~> 1.0.0-rc2",
       deps: deps
     ]
   end
