@@ -19,7 +19,7 @@ defmodule InchEx.Reporter.Local do
       case :httpc.request(:post, {inch_cli_api_endpoint, [], 'application/json', data}, [], []) do
         {:ok, {_, _, body}} -> handle_output(body)
         {:error, {:failed_connect, _, _}} -> IO.puts "Connect failed."
-        asdf -> IO.puts "Connect failed."
+        _ -> IO.puts "InchEx failed."
       end
     end
   end
