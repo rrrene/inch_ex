@@ -1,11 +1,15 @@
 defmodule InchEx.Reporter.Local do
-  @cli_api_end_point 'http://localhost:3000/api/cli'
+  @cli_api_end_point 'http://inch-ci.org/api/v1/cli'
 
   @doc """
     Runs inch locally, if installed. If you want to force usage of a particular
-    inch installation, set INCH_PATH environment variable to it.
+    inch installation, set INCH_PATH environment variable:
 
       export INCH_PATH=/home/rrrene/projects/inch
+
+    Otherwise, InchEx will take whatever `inch` command it finds. If it does
+    not find any, it sends the data to the open API at inch-ci.org to perform
+    the analysis and reports the findings back.
   """
   def run(filename, args \\ []) do
     if local_inch? do
@@ -15,7 +19,7 @@ defmodule InchEx.Reporter.Local do
       case :httpc.request(:post, {inch_cli_api_endpoint, [], 'application/json', data}, [], []) do
         {:ok, {_, _, body}} -> handle_output(body)
         {:error, {:failed_connect, _, _}} -> IO.puts "Connect failed."
-        _ -> IO.puts "Inch could not reach #{inch_cli_api_endpoint}."
+        asdf -> IO.puts "Connect failed."
       end
     end
   end
@@ -57,7 +61,12 @@ defmodule InchEx.Reporter.Local do
   end
 
   defp handle_output(output) do
-    IO.write output
+    # is this really the only way to binwrite to stdout?
+    {:ok, pid} = StringIO.open("")
+    IO.binwrite pid, output
+    {_, contents} = StringIO.contents(pid)
+    StringIO.close pid
+    IO.write contents
   end
 
   defp handle_error(output) do
