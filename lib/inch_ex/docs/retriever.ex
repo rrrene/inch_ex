@@ -157,7 +157,7 @@ defmodule InchEx.Docs.Retriever do
       name: name,
       arity: arity,
       doc: doc,
-      signature: get_signature(name, signature),
+      signature: signature,
       specs: specs,
       source: source_link(source_path, source_url, line),
       type: type
@@ -175,7 +175,7 @@ defmodule InchEx.Docs.Retriever do
       name: name,
       arity: arity,
       doc: doc || nil,
-      signature: "#{name}/#{arity}",
+      signature: nil,
       specs: specs,
       source: source_link(source_path, source_url, line),
       type: :defcallback
