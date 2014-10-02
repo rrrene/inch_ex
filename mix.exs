@@ -4,8 +4,8 @@ defmodule InchEx.Mixfile do
   def project do
     [
       app: :inch_ex,
-      version: "0.1.0",
-      elixir: "~> 1.0.0-rc2",
+      version: "0.1.1",
+      elixir: "~> 1.0",
       deps: deps
     ]
   end
