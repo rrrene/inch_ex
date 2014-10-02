@@ -3,7 +3,7 @@
 defmodule Mix.Tasks.Inch do
   use Mix.Task
 
-  @shortdoc "Report documentation for the project"
+  @shortdoc "Show documentation evaluation for the project"
   @recursive true
 
   @doc false

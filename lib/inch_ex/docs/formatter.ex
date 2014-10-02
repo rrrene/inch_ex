@@ -18,6 +18,7 @@ defmodule InchEx.Docs.Formatter do
       data = Keyword.put(data, :travis_job_id, System.get_env("TRAVIS_JOB_ID"))
       data = Keyword.put(data, :travis_commit, System.get_env("TRAVIS_COMMIT"))
       data = Keyword.put(data, :travis_repo_slug, System.get_env("TRAVIS_REPO_SLUG"))
+      data = Keyword.put(data, :travis_branch, System.get_env("TRAVIS_BRANCH"))
     else
       # IO.puts "Not Travis!!"
     end
