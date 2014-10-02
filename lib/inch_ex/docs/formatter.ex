@@ -12,6 +12,7 @@ defmodule InchEx.Docs.Formatter do
 
     list = all(modules) # |> Enum.map(fn(x) -> Map.to_list(x) end)
     data = [language: "elixir", args: args, objects: list]
+    data = Keyword.put(data, :git_repo_url, git_repo_url)
 
     if System.get_env("TRAVIS") == "true" do
       data = Keyword.put(data, :travis, true)
@@ -25,6 +26,13 @@ defmodule InchEx.Docs.Formatter do
 
     save_as_json(output, data, config)
     Path.join(config.output, "all.json")
+  end
+
+  defp git_repo_url do
+    case System.cmd("git", ["ls-remote", "--get-url", "origin"]) do
+      {output, 0} -> String.strip(output)
+      {_, _} -> nil
+    end
   end
 
   defp all(modules) do
