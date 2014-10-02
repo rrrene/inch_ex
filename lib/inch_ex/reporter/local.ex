@@ -8,7 +8,8 @@ defmodule InchEx.Reporter.Local do
       export INCH_PATH=/home/rrrene/projects/inch
 
     Otherwise, InchEx will take whatever `inch` command it finds. If it does
-    not find any, it sends the data to the open API at inch-ci.org to perform
+    not find any, it sends the data to the open API at inch-ci.org (or the
+    endpoint defined in the INCH_CLI_API environment variable) to perform
     the analysis and reports the findings back.
   """
   def run(filename, args \\ []) do
@@ -27,7 +28,7 @@ defmodule InchEx.Reporter.Local do
   defp inch_cli_api_endpoint do
     case System.get_env("INCH_CLI_API") do
       nil -> @cli_api_end_point
-      url -> url
+      url -> to_char_list url
     end
   end
 
