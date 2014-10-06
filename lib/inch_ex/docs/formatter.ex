@@ -31,7 +31,7 @@ defmodule InchEx.Docs.Formatter do
   defp git_repo_url do
     case System.cmd("git", ["ls-remote", "--get-url", "origin"]) do
       {output, 0} -> String.strip(output)
-      {_, _} -> nil
+      {output, _} -> String.strip(output)
     end
   end
 

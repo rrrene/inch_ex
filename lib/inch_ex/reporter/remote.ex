@@ -1,5 +1,5 @@
 defmodule InchEx.Reporter.Remote do
-  @build_api_end_point 'http://localhost:3000/api/v1/builds'
+  @build_api_end_point 'http://inch-ci.org/api/v1/builds'
 
   @doc """
     Runs inch remotely, if already invented.
