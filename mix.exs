@@ -6,6 +6,11 @@ defmodule InchEx.Mixfile do
       app: :inch_ex,
       version: "0.2.0",
       elixir: "~> 1.0",
+      description: "Elixir wrapper for Inch",
+      package: [
+        contributors: ["René Föhring"],
+        licenses: ["MIT"]
+      ],
       deps: deps
     ]
   end
