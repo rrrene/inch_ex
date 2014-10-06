@@ -31,6 +31,7 @@ defmodule InchEx.Reporter.Remote do
     IO.write contents
   end
 
+  # We do not want data from builds which only validate PRs
   defp valid? do
     System.get_env("TRAVIS_PULL_REQUEST") == "false"
   end
