@@ -9,9 +9,11 @@ defmodule InchEx.Reporter.Remote do
       data = File.read!(filename)
       case :httpc.request(:post, {inch_build_api_endpoint, [], 'application/json', data}, [], []) do
         {:ok, {_, _, body}} -> handle_output(body)
-        {:error, {:failed_connect, _, _}} -> IO.puts "Connect failed."
+        {:error, {:failed_connect, _, _}} -> IO.puts "InchEx failed to connect."
         _ -> IO.puts "InchEx failed."
       end
+    else
+      IO.puts "InchEx skipped."
     end
   end
 
