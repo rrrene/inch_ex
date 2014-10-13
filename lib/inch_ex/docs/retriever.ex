@@ -143,7 +143,7 @@ defmodule InchEx.Docs.Retriever do
 
     doc =
       if is_nil(doc) && behaviour do
-        "Callback implementation of `#{inspect behaviour}.#{name}/#{arity}`."
+        false
       else
         doc
       end
