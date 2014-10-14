@@ -11,15 +11,15 @@ defmodule InchEx.Docs.Formatter do
     :ok = File.mkdir_p output
 
     list = all(modules) # |> Enum.map(fn(x) -> Map.to_list(x) end)
-    data = [language: "elixir", args: args, objects: list]
-    data = Keyword.put(data, :git_repo_url, git_repo_url)
+    data = %{:language => "elixir", :args => args, :objects => list}
+    data = Map.put(data, :git_repo_url, git_repo_url)
 
     if System.get_env("TRAVIS") == "true" do
-      data = Keyword.put(data, :travis, true)
-      data = Keyword.put(data, :travis_job_id, System.get_env("TRAVIS_JOB_ID"))
-      data = Keyword.put(data, :travis_commit, System.get_env("TRAVIS_COMMIT"))
-      data = Keyword.put(data, :travis_repo_slug, System.get_env("TRAVIS_REPO_SLUG"))
-      data = Keyword.put(data, :travis_branch, System.get_env("TRAVIS_BRANCH"))
+      data = Map.put(data, :travis, true)
+      data = Map.put(data, :travis_job_id, System.get_env("TRAVIS_JOB_ID"))
+      data = Map.put(data, :travis_commit, System.get_env("TRAVIS_COMMIT"))
+      data = Map.put(data, :travis_repo_slug, System.get_env("TRAVIS_REPO_SLUG"))
+      data = Map.put(data, :travis_branch, System.get_env("TRAVIS_BRANCH"))
     else
       # IO.puts "Not Travis!!"
     end
@@ -42,19 +42,17 @@ defmodule InchEx.Docs.Formatter do
   end
 
   defp fun(module, func) do
-    list = Map.to_list(func)
-    list = Keyword.put(list, :module_id, inspect(module.module))
-    list = Keyword.put(list, :object_type, list[:__struct__] |> inspect |> object_type)
-    list = Keyword.delete(list, :__struct__)
-    list = Keyword.delete(list, :docs)
+    list = Map.delete(func, :__struct__)
+    list = Map.put(list, :module_id, inspect(module.module))
+    list = Map.put(list, :object_type, list[:__struct__] |> inspect |> object_type)
+    list = Map.delete(list, :docs)
     list
   end
 
   defp mod(module) do
-    list = Map.to_list(module)
-    list = Keyword.put(list, :object_type, list[:__struct__] |> inspect |> object_type)
-    list = Keyword.delete(list, :__struct__)
-    list = Keyword.delete(list, :docs)
+    list = Map.delete(module, :__struct__)
+    list = Map.put(list, :object_type, list[:__struct__] |> inspect |> object_type)
+    list = Map.delete(list, :docs)
     list
   end
 
