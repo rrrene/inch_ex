@@ -247,11 +247,8 @@ defmodule InchEx.Docs.Retriever do
     end
   end
 
-  defp source_link(_source_path, nil, _line), do: nil
-
-  defp source_link(source_path, source_url, line) do
-    source_url = Regex.replace(~r/%{path}/, source_url, source_path)
-    Regex.replace(~r/%{line}/, source_url, to_string(line))
+  defp source_link(source_path, _source_url, line) do
+    "#{source_path}:#{line}"
   end
 
   defp source_path(module, config) do
