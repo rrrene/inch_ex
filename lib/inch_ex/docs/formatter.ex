@@ -42,16 +42,18 @@ defmodule InchEx.Docs.Formatter do
   end
 
   defp fun(module, func) do
+    o_type = Map.get(func, :__struct__) |> inspect |> object_type
     list = Map.delete(func, :__struct__)
     list = Map.put(list, :module_id, inspect(module.module))
-    list = Map.put(list, :object_type, list[:__struct__] |> inspect |> object_type)
+    list = Map.put(list, :object_type, o_type)
     list = Map.delete(list, :docs)
     list
   end
 
   defp mod(module) do
+    o_type = Map.get(module, :__struct__) |> inspect |> object_type
     list = Map.delete(module, :__struct__)
-    list = Map.put(list, :object_type, list[:__struct__] |> inspect |> object_type)
+    list = Map.put(list, :object_type, o_type)
     list = Map.delete(list, :docs)
     list
   end
