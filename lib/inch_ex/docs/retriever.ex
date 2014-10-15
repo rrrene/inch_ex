@@ -2,17 +2,17 @@
 
 defmodule InchEx.ModuleObject do
   defstruct id: nil, module: nil, moduledoc: nil,
-    docs: [], typespecs: [], source: nil, type: nil
+    docs: [], source: nil, type: nil
 end
 
 defmodule InchEx.FunctionObject do
   defstruct id: nil, name: nil, arity: 0, doc: [],
-    source: nil, type: nil, signature: nil, specs: []
+    source: nil, type: nil, signature: nil
 end
 
 defmodule InchEx.TypeObject do
   defstruct id: nil, name: nil, arity: 0, type: nil,
-    spec: nil, doc: nil
+    doc: nil
 end
 
 defmodule InchEx.Docs.Retriever.Error do
@@ -110,7 +110,6 @@ defmodule InchEx.Docs.Retriever do
       type: type,
       moduledoc: moduledoc,
       docs: docs,
-      typespecs: get_types(module),
       source: source_link(source_path, source_url, line),
     }
   end
@@ -158,7 +157,6 @@ defmodule InchEx.Docs.Retriever do
       arity: arity,
       doc: doc,
       signature: signature,
-      specs: specs,
       source: source_link(source_path, source_url, line),
       type: type
     }
@@ -176,7 +174,6 @@ defmodule InchEx.Docs.Retriever do
       arity: arity,
       doc: doc || nil,
       signature: nil,
-      specs: specs,
       source: source_link(source_path, source_url, line),
       type: :defcallback
     }
@@ -241,7 +238,6 @@ defmodule InchEx.Docs.Retriever do
         name: name,
         arity: arity,
         type: type,
-        spec: spec,
         doc: doc
       }
     end
