@@ -10,6 +10,29 @@ defmodule InchEx do
     ]
   end
 
+  defmodule Helper do
+    def map_tuple_to_list(tuple) when is_tuple(tuple) do
+      map_tuple_to_list Tuple.to_list(tuple)
+    end
+
+    def map_tuple_to_list([head | tail]) when is_tuple(head) do
+      [map_tuple_to_list(head)] ++ map_tuple_to_list(tail)
+    end
+
+    def map_tuple_to_list([head | tail]) when is_list(head) do
+      list = Enum.map(head, fn x -> map_tuple_to_list(x) end)
+      [list] ++ map_tuple_to_list(tail)
+    end
+
+    def map_tuple_to_list([head | tail]) do
+      [head] ++ map_tuple_to_list(tail)
+    end
+
+    def map_tuple_to_list(value) do
+      value
+    end
+  end
+
   @doc false
   def generate_docs(project, version, args, options) when is_binary(project) and is_binary(version) and is_list(options) do
     config = build_config(project, version, options)
