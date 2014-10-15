@@ -1,1 +1,1 @@
-%{"json": {:package, "0.3.0"}}
+%{"poison": {:hex, :poison, "1.2.0"}}

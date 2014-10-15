@@ -33,7 +33,7 @@ defmodule InchEx.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:json, "~> 0.3.0"}
+      {:poison, "~> 1.2"}
     ]
   end
 end
