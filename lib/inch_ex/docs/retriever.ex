@@ -156,10 +156,34 @@ defmodule InchEx.Docs.Retriever do
       name: name,
       arity: arity,
       doc: doc,
-      signature: signature,
+      signature: map_tuple_to_list(signature),
       source: source_link(source_path, source_url, line),
       type: type
     }
+  end
+
+  defp map_tuple_to_list(tuple) when is_tuple(tuple) do
+    map_tuple_to_list Tuple.to_list(tuple)
+  end
+
+  defp map_tuple_to_list([head | tail]) when is_tuple(head) do
+    map_tuple_to_list(head) ++ map_tuple_to_list(tail)
+  end
+
+  defp map_tuple_to_list([head | tail]) when is_list(head) do
+    Enum.map(head, fn x -> map_tuple_to_list(x) end) ++ map_tuple_to_list(tail)
+  end
+
+  defp map_tuple_to_list([head | tail]) do
+    [head] ++ map_tuple_to_list(tail)
+  end
+
+  defp map_tuple_to_list([]) do
+    []
+  end
+
+  defp map_tuple_to_list(value) do
+    value
   end
 
   defp get_callback(callback, source_path, source_url, callbacks) do
