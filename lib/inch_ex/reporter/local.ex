@@ -43,22 +43,11 @@ defmodule InchEx.Reporter.Local do
     !is_nil(inch_cmd)
   end
 
-  defp local_inch(args \\ []) do
+  defp local_inch(args) do
     case System.cmd(inch_cmd, args) do
       {output, 0} -> handle_output(output)
       {output, _} -> handle_error(output)
     end
-  end
-
-  defp local_inch_version do
-    case System.cmd(inch_cmd, ["--version"]) do
-      {output, 0} -> local_inch_version(output)
-      {output, _} -> handle_error(output)
-    end
-  end
-
-  defp local_inch_version("inch " <> major = name) do
-    String.strip(major)
   end
 
   defp handle_output(output) do

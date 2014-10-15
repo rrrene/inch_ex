@@ -136,7 +136,7 @@ defmodule InchEx.Docs.Retriever do
     true
   end
 
-  defp get_function(function, source_path, source_url, all_specs, cb_impls) do
+  defp get_function(function, source_path, source_url, _all_specs, cb_impls) do
     { { name, arity }, line, type, signature, doc } = function
     behaviour = Dict.get(cb_impls, { name, arity })
 
@@ -146,10 +146,6 @@ defmodule InchEx.Docs.Retriever do
       else
         doc
       end
-
-    specs = all_specs
-            |> Dict.get({ name, arity }, [])
-            |> Enum.map(&Kernel.Typespec.spec_to_ast(name, &1))
 
     %InchEx.FunctionObject{
       id: "#{name}/#{arity}",
@@ -162,11 +158,8 @@ defmodule InchEx.Docs.Retriever do
     }
   end
 
-  defp get_callback(callback, source_path, source_url, callbacks) do
+  defp get_callback(callback, source_path, source_url, _callbacks) do
     { { name, arity }, line, _kind, doc } = callback
-
-    specs = Dict.get(callbacks, { name, arity }, [])
-            |> Enum.map(&Kernel.Typespec.spec_to_ast(name, &1))
 
     %InchEx.FunctionObject{
       id: "#{name}/#{arity}",
@@ -177,17 +170,6 @@ defmodule InchEx.Docs.Retriever do
       source: source_link(source_path, source_url, line),
       type: :defcallback
     }
-  end
-
-  defp get_signature(name, args) do
-    cond do
-      name in [:__aliases__, :__block__] ->
-        "#{name}(args)"
-      name in [:__ENV__, :__MODULE__, :__DIR__, :__CALLER__, :"%", :"%{}"] ->
-        "#{name}"
-      true ->
-        Macro.to_string { name, 0, args }
-    end
   end
 
   # Detect if a module is an exception, struct,
@@ -225,24 +207,6 @@ defmodule InchEx.Docs.Retriever do
     |> Enum.concat()
   end
 
-  defp get_types(module) do
-    all  = Kernel.Typespec.beam_types(module) || []
-    docs = Enum.into(Kernel.Typespec.beam_typedocs(module) || [], %{})
-
-    for { type, { name, _, args } = tuple } <- all, type != :typep do
-      spec  = process_type_ast(Kernel.Typespec.type_to_ast(tuple), type)
-      arity = length(args)
-      doc   = docs[{ name, arity }]
-      %InchEx.TypeObject{
-        id: "#{name}/#{arity}",
-        name: name,
-        arity: arity,
-        type: type,
-        doc: doc
-      }
-    end
-  end
-
   defp source_link(source_path, _source_url, line) do
     "#{source_path}:#{line}"
   end
@@ -256,8 +220,4 @@ defmodule InchEx.Docs.Retriever do
       source
     end
   end
-
-  # Cut off the body of an opaque type while leaving it on a normal type.
-  defp process_type_ast({:::, _, [d|_]}, :opaque), do: d
-  defp process_type_ast(ast, _), do: ast
 end

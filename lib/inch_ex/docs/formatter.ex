@@ -24,7 +24,7 @@ defmodule InchEx.Docs.Formatter do
       # IO.puts "Not Travis!!"
     end
 
-    save_as_json(output, data, config)
+    save_as_json(output, data)
     Path.join(config.output, "all.json")
   end
 
@@ -58,7 +58,7 @@ defmodule InchEx.Docs.Formatter do
     list
   end
 
-  defp save_as_json(output, data, config) do
+  defp save_as_json(output, data) do
     json = Poison.Encoder.encode(data, [])
     :ok = File.write("#{output}/all.json", json)
   end
