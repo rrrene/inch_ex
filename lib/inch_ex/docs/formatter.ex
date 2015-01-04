@@ -28,8 +28,7 @@ defmodule InchEx.Docs.Formatter do
         data = Map.put(data, :revision, System.get_env("CIRCLE_SHA1"))
         data = Map.put(data, :nwo, System.get_env("CIRCLE_PROJECT_USERNAME") <> "/" <> System.get_env("CIRCLE_PROJECT_REPONAME"))
         data = Map.put(data, :branch_name, System.get_env("CIRCLE_BRANCH"))
-       end
-      # IO.puts "Not Travis!!"
+      end
     end
 
     save_as_json(output, data)
