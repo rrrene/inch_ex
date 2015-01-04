@@ -11,8 +11,10 @@ defmodule InchEx.Docs.Formatter do
     :ok = File.mkdir_p output
 
     list = all(modules) # |> Enum.map(fn(x) -> Map.to_list(x) end)
-    data = %{:language => "elixir", :args => args, :objects => list}
+    data = %{:language => "elixir", :client_name => "inch_ex", :args => args}
+    data = Map.put(data, :client_version, InchEx.Mixfile.project[:version])
     data = Map.put(data, :git_repo_url, git_repo_url)
+    data = Map.put(data, :objects, list)
 
     if InchEx.Reporter.Remote.travis? do
       data = Map.put(data, :travis, true)
