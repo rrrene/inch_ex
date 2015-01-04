@@ -14,13 +14,19 @@ defmodule InchEx.Docs.Formatter do
     data = %{:language => "elixir", :args => args, :objects => list}
     data = Map.put(data, :git_repo_url, git_repo_url)
 
-    if System.get_env("TRAVIS") == "true" do
+    if InchEx.Reporter.Remote.travis? do
       data = Map.put(data, :travis, true)
       data = Map.put(data, :travis_job_id, System.get_env("TRAVIS_JOB_ID"))
       data = Map.put(data, :travis_commit, System.get_env("TRAVIS_COMMIT"))
       data = Map.put(data, :travis_repo_slug, System.get_env("TRAVIS_REPO_SLUG"))
       data = Map.put(data, :travis_branch, System.get_env("TRAVIS_BRANCH"))
     else
+      if InchEx.Reporter.Remote.circleci? do
+        data = Map.put(data, :circleci, true)
+        data = Map.put(data, :revision, System.get_env("CIRCLE_SHA1"))
+        data = Map.put(data, :nwo, System.get_env("CIRCLE_PROJECT_USERNAME") <> "/" <> System.get_env("CIRCLE_PROJECT_REPONAME"))
+        data = Map.put(data, :branch_name, System.get_env("CIRCLE_BRANCH"))
+       end
       # IO.puts "Not Travis!!"
     end
 

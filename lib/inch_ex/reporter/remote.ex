@@ -17,6 +17,14 @@ defmodule InchEx.Reporter.Remote do
     end
   end
 
+  def circleci? do
+    System.get_env("CIRCLECI") == "true"
+  end
+
+  def travis? do
+    System.get_env("TRAVIS") == "true"
+  end
+
   defp inch_build_api_endpoint do
     case System.get_env("INCH_BUILD_API") do
       nil -> @build_api_end_point
@@ -35,6 +43,24 @@ defmodule InchEx.Reporter.Remote do
 
   # We do not want data from builds which only validate PRs
   defp valid? do
+    if circleci? do
+      valid?(:circleci)
+    else
+      if travis? do
+        valid?(:travis)
+      else
+        false
+      end
+    end
+  end
+
+  # We do not want data from builds which only validate PRs
+  defp valid?(:travis) do
     System.get_env("TRAVIS_PULL_REQUEST") == "false"
+  end
+
+  # We do not want data from builds which only validate PRs
+  defp valid?(:circleci) do
+    is_nil(System.get_env("CI_PULL_REQUEST"))
   end
 end
