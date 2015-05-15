@@ -34,8 +34,8 @@ defmodule Mix.Tasks.Inch do
     options = Keyword.put_new(options, :retriever, InchEx.Docs.Retriever)
     options = Keyword.put_new(options, :formatter, InchEx.Docs.Formatter)
 
-    generator.(project, version, args, options)
-      |> reporter.run(args)
+    json_filename = generator.(project, version, args, options)
+    reporter.run(json_filename, args)
   end
 
   defp get_docs_opts(config) do

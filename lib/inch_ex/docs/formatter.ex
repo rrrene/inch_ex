@@ -4,7 +4,9 @@ defmodule InchEx.Docs.Formatter do
   """
 
   @doc """
-  Generate JSON documentation for the given modules
+  Generate JSON documentation for the given modules.
+
+  Returns the path of the generated JSON file.
   """
   def run(modules, args, config)  do
     output = Path.expand(config.output)
@@ -13,33 +15,28 @@ defmodule InchEx.Docs.Formatter do
     list = all(modules) # |> Enum.map(fn(x) -> Map.to_list(x) end)
     data = %{:language => "elixir", :client_name => "inch_ex", :args => args}
     data = Map.put(data, :client_version, InchEx.Mixfile.project[:version])
-    data = Map.put(data, :git_repo_url, git_repo_url)
+    data = Map.put(data, :git_repo_url, InchEx.Git.repo_https_url)
+    data = Map.put(data, :revision, InchEx.Git.revision)
+    data = Map.put(data, :branch_name, InchEx.Git.branch_name)
     data = Map.put(data, :objects, list)
 
-    if InchEx.Reporter.Remote.travis? do
-      data = Map.put(data, :travis, true)
-      data = Map.put(data, :travis_job_id, System.get_env("TRAVIS_JOB_ID"))
-      data = Map.put(data, :travis_commit, System.get_env("TRAVIS_COMMIT"))
-      data = Map.put(data, :travis_repo_slug, System.get_env("TRAVIS_REPO_SLUG"))
-      data = Map.put(data, :travis_branch, System.get_env("TRAVIS_BRANCH"))
-    else
-      if InchEx.Reporter.Remote.circleci? do
+    cond do
+      InchEx.Env.travis? ->
+        data = Map.put(data, :travis, true)
+        data = Map.put(data, :travis_job_id, System.get_env("TRAVIS_JOB_ID"))
+
+      InchEx.Env.circleci? ->
         data = Map.put(data, :circleci, true)
-        data = Map.put(data, :revision, System.get_env("CIRCLE_SHA1"))
-        data = Map.put(data, :nwo, System.get_env("CIRCLE_PROJECT_USERNAME") <> "/" <> System.get_env("CIRCLE_PROJECT_REPONAME"))
-        data = Map.put(data, :branch_name, System.get_env("CIRCLE_BRANCH"))
-      end
+
+      InchEx.Env.unknown_ci? ->
+        data = Map.put(data, :ci, true)
+
+      true ->
+        data = Map.put(data, :manual, true)
     end
 
     save_as_json(output, data)
     Path.join(config.output, "all.json")
-  end
-
-  defp git_repo_url do
-    case System.cmd("git", ["ls-remote", "--get-url", "origin"]) do
-      {output, 0} -> String.strip(output)
-      {output, _} -> String.strip(output)
-    end
   end
 
   defp all(modules) do

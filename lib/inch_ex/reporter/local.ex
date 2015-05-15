@@ -11,6 +11,8 @@ defmodule InchEx.Reporter.Local do
     not find any, it sends the data to the open API at inch-ci.org (or the
     endpoint defined in the INCH_CLI_API environment variable) to perform
     the analysis and reports the findings back.
+
+    Returns a tuple `{:ok, _}` if successful, `{:error, _}` otherwise.
   """
   def run(filename, args \\ []) do
     if local_inch? do
@@ -18,9 +20,9 @@ defmodule InchEx.Reporter.Local do
     else
       data = File.read!(filename)
       case :httpc.request(:post, {inch_cli_api_endpoint, [], 'application/json', data}, [], []) do
-        {:ok, {_, _, body}} -> handle_output(body)
-        {:error, {:failed_connect, _, _}} -> IO.puts "Connect failed."
-        _ -> IO.puts "InchEx failed."
+        {:ok, {_, _, body}} -> InchEx.Reporter.handle_success(body)
+        {:error, {:failed_connect, _, _}} -> InchEx.Reporter.handle_error "Connect failed."
+        _ -> InchEx.Reporter.handle_error "InchEx failed."
       end
     end
   end
@@ -45,22 +47,8 @@ defmodule InchEx.Reporter.Local do
 
   defp local_inch(args) do
     case System.cmd(inch_cmd, args) do
-      {output, 0} -> handle_output(output)
-      {output, _} -> handle_error(output)
+      {output, 0} -> InchEx.Reporter.handle_success(output)
+      {output, _} -> InchEx.Reporter.handle_error(output)
     end
-  end
-
-  defp handle_output(output) do
-    # is this really the only way to binwrite to stdout?
-    {:ok, pid} = StringIO.open("")
-    IO.binwrite pid, output
-    {_, contents} = StringIO.contents(pid)
-    StringIO.close pid
-    IO.write contents
-  end
-
-  defp handle_error(output) do
-    IO.puts output
-    IO.puts "Inch exited with non-zero result"
   end
 end

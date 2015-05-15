@@ -3,26 +3,20 @@ defmodule InchEx.Reporter.Remote do
 
   @doc """
     Runs inch remotely, if already invented.
+
+    Returns a tuple `{:ok, _}` if successful, `{:error, _}` otherwise.
   """
   def run(filename, _) do
     if valid? do
       data = File.read!(filename)
       case :httpc.request(:post, {inch_build_api_endpoint, [], 'application/json', data}, [], []) do
-        {:ok, {_, _, body}} -> handle_output(body)
-        {:error, {:failed_connect, _, _}} -> IO.puts "InchEx failed to connect."
-        _ -> IO.puts "InchEx failed."
+        {:ok, {_, _, body}} -> InchEx.Reporter.handle_success(body)
+        {:error, {:failed_connect, _, _}} -> InchEx.Reporter.handle_error "InchEx failed to connect."
+        _ -> InchEx.Reporter.handle_error "InchEx failed."
       end
     else
-      IO.puts "InchEx skipped."
+      InchEx.Reporter.handle_error "InchEx skipped."
     end
-  end
-
-  def circleci? do
-    System.get_env("CIRCLECI") == "true"
-  end
-
-  def travis? do
-    System.get_env("TRAVIS") == "true"
   end
 
   defp inch_build_api_endpoint do
@@ -32,25 +26,12 @@ defmodule InchEx.Reporter.Remote do
     end
   end
 
-  defp handle_output(output) do
-    # is this really the only way to binwrite to stdout?
-    {:ok, pid} = StringIO.open("")
-    IO.binwrite pid, output
-    {_, contents} = StringIO.contents(pid)
-    StringIO.close pid
-    IO.write contents
-  end
-
   # We do not want data from builds which only validate PRs
   defp valid? do
-    if circleci? do
-      valid?(:circleci)
-    else
-      if travis? do
-        valid?(:travis)
-      else
-        false
-      end
+    cond do
+      InchEx.Env.circleci? -> valid?(:circleci)
+      InchEx.Env.travis? -> valid?(:travis)
+      true -> true
     end
   end
 
