@@ -4,11 +4,18 @@ defmodule Mix.Tasks.Inch do
   use Mix.Task
 
   @shortdoc "Show documentation evaluation for the project"
+  @version Mix.Project.config[:version]
   @recursive true
 
   @doc false
   def run(args, config \\ Mix.Project.config, generator \\ &InchEx.generate_docs/4, reporter \\ InchEx.Reporter.Local) do
     Mix.Task.run "compile"
+
+    case args do
+      ["-v"] -> print_version
+      ["--version"] -> print_version
+      _ -> nil
+    end
 
     project = (config[:name] || config[:app]) |> to_string
     version = config[:version] || "dev"
@@ -45,5 +52,9 @@ defmodule Mix.Tasks.Inch do
       is_nil(docs) -> []
       true -> docs
     end
+  end
+
+  defp print_version do
+    IO.puts "inch_ex #{@version}"
   end
 end
