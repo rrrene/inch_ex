@@ -7,6 +7,7 @@ defmodule InchEx.Mixfile do
       version: "0.2.5",
       elixir: "~> 1.0",
       description: "Elixir wrapper for Inch",
+      github_url: "https://github.com/rrrene/inch_ex",
       package: [
         contributors: ["René Föhring"],
         licenses: ["MIT"]

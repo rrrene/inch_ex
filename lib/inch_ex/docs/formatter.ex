@@ -32,7 +32,7 @@ defmodule InchEx.Docs.Formatter do
         data = Map.put(data, :ci, true)
 
       true ->
-        data = Map.put(data, :manual, true)
+        data = Map.put(data, :shell, true)
     end
 
     save_as_json(output, data)
