@@ -1,7 +1,6 @@
 defmodule Mix.Tasks.Inch.Report do
   use Mix.Task
 
-  @shortdoc "Report documentation for the project to inch-ci.org"
   @recursive true
 
   @doc false
