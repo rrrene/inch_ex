@@ -4,7 +4,7 @@ defmodule Mix.Tasks.Inchci.Add do
   @shortdoc "Add the project to inch-ci.org"
   @recursive true
 
-  @inch_ex_github_url Mix.Project.config[:github_url]
+  @inch_ex_github_url Mix.Project.config[:source_url]
   @not_github_error """
   Currently, only open source projects hosted on GitHub can be added to
   https://inch-ci.org
