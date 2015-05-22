@@ -1,4 +1,6 @@
 defmodule InchEx.Docs.Formatter do
+  @version Mix.Project.config[:version]
+
   @moduledoc """
   Provide JSON-formatted documentation
   """
@@ -14,7 +16,7 @@ defmodule InchEx.Docs.Formatter do
 
     list = all(modules) # |> Enum.map(fn(x) -> Map.to_list(x) end)
     data = %{:language => "elixir", :client_name => "inch_ex", :args => args}
-    data = Map.put(data, :client_version, InchEx.Mixfile.project[:version])
+    data = Map.put(data, :client_version, @version)
     data = Map.put(data, :git_repo_url, InchEx.Git.repo_https_url)
     data = Map.put(data, :revision, InchEx.Git.revision)
     data = Map.put(data, :branch_name, InchEx.Git.branch_name)
