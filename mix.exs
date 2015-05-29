@@ -10,7 +10,10 @@ defmodule InchEx.Mixfile do
       source_url: "https://github.com/rrrene/inch_ex",
       package: [
         contributors: ["René Föhring"],
-        licenses: ["MIT"]
+        licenses: ["MIT"],
+        links: %{
+         "GitHub" => "https://github.com/rrrene/inch_ex",
+        }
       ],
       deps: deps
     ]
