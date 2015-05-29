@@ -19,22 +19,25 @@ defmodule InchEx.Docs.Formatter do
     data = Map.put(data, :client_version, @version)
     data = Map.put(data, :git_repo_url, InchEx.Git.repo_https_url)
     data = Map.put(data, :revision, InchEx.Git.revision)
-    data = Map.put(data, :branch_name, InchEx.Git.branch_name)
     data = Map.put(data, :objects, list)
 
     cond do
       InchEx.Env.travis? ->
         data = Map.put(data, :travis, true)
         data = Map.put(data, :travis_job_id, System.get_env("TRAVIS_JOB_ID"))
+        data = Map.put(data, :branch_name, System.get_env("TRAVIS_BRANCH"))
 
       InchEx.Env.circleci? ->
         data = Map.put(data, :circleci, true)
+        data = Map.put(data, :branch_name, System.get_env("CIRCLE_BRANCH"))
 
       InchEx.Env.unknown_ci? ->
         data = Map.put(data, :ci, true)
+        data = Map.put(data, :branch_name, InchEx.Git.branch_name)
 
       true ->
         data = Map.put(data, :shell, true)
+        data = Map.put(data, :branch_name, InchEx.Git.branch_name)
     end
 
     save_as_json(output, data)
