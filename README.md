@@ -35,6 +35,18 @@ If you have Inch installed it will run locally. If not, it will use the API of [
 
 
 
+## Adding a project to Inch CI
+
+Adding your project to [Inch CI](https://inch-ci.org/) and getting a badge is easy:
+
+```bash
+    $ mix inchci.add
+```
+
+[Read the blog post](http://trivelop.de/2015/05/19/elixir-inchci-add/) for more information.
+
+
+
 ## Philosophy
 
 I will point you to the [original Inch README](https://github.com/rrrene/inch#philosophy) for an overview of the basic premises and priorities of the Inch project.
