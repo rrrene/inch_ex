@@ -10,7 +10,7 @@ Add InchEx as a dependency in your `mix.exs` file.
 
 ```elixir
 defp deps do
-  [{:inch_ex, "~> 0.2.0"}]
+  [{:inch_ex, only: :docs}]
 end
 ```
 
