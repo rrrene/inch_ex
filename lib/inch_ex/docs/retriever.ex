@@ -165,7 +165,7 @@ defmodule InchEx.Docs.Retriever do
       id: "#{name}/#{arity}",
       name: name,
       arity: arity,
-      doc: doc || nil,
+      doc: doc,
       signature: nil,
       source: source_link(source_path, source_url, line),
       type: :defcallback
