@@ -32,7 +32,7 @@ After adding you are done, run `mix deps.get` in your shell to fetch the new dep
 
 To run Inch, simply type
 
-    $ mix inch
+    $ MIX_ENV=docs mix inch
 
 and you will get something like the following:
 
