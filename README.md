@@ -24,8 +24,9 @@ defp deps do
 end
 ```
 
-After adding you are done, run `mix deps.get` in your shell to fetch the new dependency.
+After you are done, run this in your shell to fetch the new dependency:
 
+    $ MIX_ENV=docs mix deps.get
 
 
 ## Usage
@@ -37,7 +38,7 @@ To run Inch, simply type
 and you will get something like the following:
 
 ```bash
-    $ mix inch
+    $ MIX_ENV=docs mix inch
 
     # Properly documented, could be improved:
 
@@ -64,7 +65,7 @@ If you have Inch installed it will run locally. If not, it will use the API of [
 Adding your project to [Inch CI](https://inch-ci.org/) and getting a badge is easy:
 
 ```bash
-    $ mix inchci.add
+    $ MIX_ENV=docs mix inchci.add
 
                              Adding project to Inch CI ...
 
