@@ -24,6 +24,8 @@ defmodule InchEx.Docs.Retriever do
   Functions to extract documentation information from modules.
   """
 
+  alias InchEx.Docs.Retriever.Error
+
   @doc """
   Extract documentation from all modules in the specified directory
   """
