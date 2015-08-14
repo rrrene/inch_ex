@@ -74,14 +74,12 @@ defmodule InchEx.Docs.Retriever do
   end
 
   defp verify_module(module) do
-    case Code.get_docs(module, :all) do
-      [docs: _, moduledoc: {_line, false}] ->
+    case Code.get_docs(module, :moduledoc) do
+      {_line, false} ->
         nil
-      [docs: _, moduledoc: _] ->
+      {_, _} ->
         module
       nil ->
-        nil
-      _ ->
         raise(Error, message: "module #{inspect module} was not compiled with flag --docs")
     end
   end
