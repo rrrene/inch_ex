@@ -4,7 +4,7 @@ defmodule InchEx.Mixfile do
   def project do
     [
       app: :inch_ex,
-      version: "0.4.0-dev",
+      version: "0.4.0",
       elixir: "~> 1.0",
       description: "Elixir wrapper for Inch",
       source_url: "https://github.com/rrrene/inch_ex",
