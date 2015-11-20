@@ -20,25 +20,25 @@ Add InchEx as a dependency in your `mix.exs` file.
 
 ```elixir
 defp deps do
-  [{:inch_ex, only: :docs}]
+  [{:inch_ex, only: [:dev, :test]}]
 end
 ```
 
 After you are done, run this in your shell to fetch the new dependency:
 
-    $ MIX_ENV=docs mix deps.get
+    $ mix deps.get
 
 
 ## Usage
 
 To run Inch, simply type
 
-    $ MIX_ENV=docs mix inch
+    $ mix inch
 
 and you will get something like the following:
 
 ```bash
-    $ MIX_ENV=docs mix inch
+    $ mix inch
 
     # Properly documented, could be improved:
 
@@ -65,7 +65,7 @@ If you have Inch installed it will run locally. If not, it will use the API of [
 Adding your project to [Inch CI](https://inch-ci.org/) and getting a badge is easy:
 
 ```bash
-    $ MIX_ENV=docs mix inchci.add
+    $ mix inchci.add
 
                              Adding project to Inch CI ...
 
