@@ -6,7 +6,7 @@ defmodule InchEx.Mixfile do
       app: :inch_ex,
       version: "0.4.0",
       elixir: "~> 1.0",
-      description: "Elixir wrapper for Inch",
+      description: "Provides a Mix task that gives you hints where to improve your inline docs",
       source_url: "https://github.com/rrrene/inch_ex",
       package: [
         contributors: ["René Föhring"],
