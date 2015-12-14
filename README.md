@@ -1,4 +1,4 @@
-# InchEx [![Inline docs](http://inch-ci.org/github/rrrene/inch_ex.svg?branch=master)](http://inch-ci.org/github/rrrene/inch_ex)
+# InchEx [![Inline docs](http://inch-ci.org/github/rrrene/inch_ex.svg?branch=master)](http://inch-ci.org/github/rrrene/inch_ex) [![Deps Status](http://hexfaktor.org/images/deps.svg)](http://hexfaktor.org/)
 
 InchEx provides a Mix task to give you hints where to improve your inline docs. One Inch at a time.
 
