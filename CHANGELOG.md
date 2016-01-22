@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.5.0
+
+- Elixir `v1.2` compatibility
+- Update Poison to `v2.0`
+
 ## 0.4.0
 
 - Elixir `v1.1` compatibility
