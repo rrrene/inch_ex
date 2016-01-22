@@ -9,7 +9,7 @@ defmodule InchEx.Mixfile do
       description: "Provides a Mix task that gives you hints where to improve your inline docs",
       source_url: "https://github.com/rrrene/inch_ex",
       package: [
-        contributors: ["René Föhring"],
+        maintainers: ["René Föhring"],
         licenses: ["MIT"],
         links: %{
          "GitHub" => "https://github.com/rrrene/inch_ex",
