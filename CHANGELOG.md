@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.1
+
+- Relax version requirement on Poison so that `v1.5.x` and `v2.x` are supported
+
 ## 0.5.0
 
 - Elixir `v1.2` compatibility
