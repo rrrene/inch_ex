@@ -1,1 +1,3 @@
-%{"poison": {:hex, :poison, "2.0.0"}}
+%{"bunt": {:hex, :bunt, "0.1.6", "5d95a6882f73f3b9969fdfd1953798046664e6f77ec4e486e6fafc7caad97c6f", [:mix], []},
+  "credo": {:hex, :credo, "0.4.0", "ab0b8ee2a742ef4b7c8612c55f03cab11d6d1d258d98b3c03572d01909590674", [:mix], [{:bunt, "~> 0.1.6", [hex: :bunt, optional: false]}]},
+  "poison": {:hex, :poison, "2.0.0", "1b651327f2306bfe10e349dee38e740b0c550426138ebc43ffcf058661bcacbf", [:mix], []}}
