@@ -21,21 +21,25 @@ defmodule Mix.Tasks.Inch do
     version = config[:version] || "dev"
     options = get_docs_opts(config)
 
-    if source_url = config[:source_url] do
-      options = Keyword.put(options, :source_url, source_url)
-    end
-
-    cond do
-      is_nil(options[:main]) ->
-        # Try generating main module's name from the app name
-        options = Keyword.put(options, :main, (config[:app] |> Atom.to_string |> Mix.Utils.camelize))
-
-      is_atom(options[:main]) ->
-        options = Keyword.update!(options, :main, &inspect/1)
-
-      is_binary(options[:main]) ->
+    options =
+      if source_url = config[:source_url] do
+        Keyword.put(options, :source_url, source_url)
+      else
         options
-    end
+      end
+
+    options =
+      cond do
+        is_nil(options[:main]) ->
+          # Try generating main module's name from the app name
+          Keyword.put(options, :main, (config[:app] |> Atom.to_string |> Mix.Utils.camelize))
+
+        is_atom(options[:main]) ->
+          Keyword.update!(options, :main, &inspect/1)
+
+        is_binary(options[:main]) ->
+          options
+      end
 
     options = Keyword.put_new(options, :source_beam, Mix.Project.compile_path)
     options = Keyword.put_new(options, :retriever, InchEx.Docs.Retriever)

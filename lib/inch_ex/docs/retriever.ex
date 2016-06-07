@@ -95,12 +95,14 @@ defmodule InchEx.Docs.Retriever do
 
     docs = Enum.filter_map Code.get_docs(module, :docs), &has_doc?(&1, type),
                            &get_function(&1, source_path, source_url, specs, callbacks)
-
-    if type == :behaviour do
-      callbacks = Enum.into(Kernel.Typespec.beam_callbacks(module) || [], %{})
-      docs = Enum.map(Enum.sort(module.__behaviour__(:docs)),
-                      &get_callback(&1, source_path, source_url, callbacks)) ++ docs
-    end
+    docs =
+      if type == :behaviour do
+        callbacks2 = Enum.into(Kernel.Typespec.beam_callbacks(module) || [], %{})
+        Enum.map(Enum.sort(module.__behaviour__(:docs)),
+                        &get_callback(&1, source_path, source_url, callbacks2)) ++ docs
+      else
+        docs
+      end
 
     { line, moduledoc } = Code.get_docs(module, :moduledoc)
 
