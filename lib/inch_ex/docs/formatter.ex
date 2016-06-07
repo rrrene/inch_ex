@@ -21,24 +21,29 @@ defmodule InchEx.Docs.Formatter do
     data = Map.put(data, :revision, InchEx.Git.revision)
     data = Map.put(data, :objects, list)
 
-    cond do
-      InchEx.Env.travis? ->
-        data = Map.put(data, :travis, true)
-        data = Map.put(data, :travis_job_id, System.get_env("TRAVIS_JOB_ID"))
-        data = Map.put(data, :branch_name, System.get_env("TRAVIS_BRANCH"))
+    data =
+      cond do
+        InchEx.Env.travis? ->
+          data
+          |> Map.put(:travis, true)
+          |> Map.put(:travis_job_id, System.get_env("TRAVIS_JOB_ID"))
+          |> Map.put(:branch_name, System.get_env("TRAVIS_BRANCH"))
 
-      InchEx.Env.circleci? ->
-        data = Map.put(data, :circleci, true)
-        data = Map.put(data, :branch_name, System.get_env("CIRCLE_BRANCH"))
+        InchEx.Env.circleci? ->
+          data
+          |> Map.put(:circleci, true)
+          |> Map.put(:branch_name, System.get_env("CIRCLE_BRANCH"))
 
-      InchEx.Env.unknown_ci? ->
-        data = Map.put(data, :ci, true)
-        data = Map.put(data, :branch_name, InchEx.Git.branch_name)
+        InchEx.Env.unknown_ci? ->
+          data
+          |> Map.put(:ci, true)
+          |> Map.put(:branch_name, InchEx.Git.branch_name)
 
-      true ->
-        data = Map.put(data, :shell, true)
-        data = Map.put(data, :branch_name, InchEx.Git.branch_name)
-    end
+        true ->
+          data
+          |> Map.put(:shell, true)
+          |> Map.put(:branch_name, InchEx.Git.branch_name)
+      end
 
     save_as_json(output, data)
     Path.join(config.output, "all.json")
