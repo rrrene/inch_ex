@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.3
+
+- Restrict `credo` dependency to `:dev` env (thx @georgeguimaraes)
+
 ## 0.5.2
 
 - Fix Elixir 1.3 compiler warnings
