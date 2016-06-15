@@ -20,7 +20,7 @@ Add InchEx as a dependency in your `mix.exs` file.
 
 ```elixir
 defp deps do
-  [{:inch_ex, only: [:dev, :test]}]
+  [{:inch_ex, "~> 0.5", only: [:dev, :test]}]
 end
 ```
 
