@@ -1,4 +1,4 @@
-# Add your project add the end of this file and I will set it up for you!
+# Add your project at the end of this file and I will set it up for you!
 - elixir-lang/ecto
 - elixir-lang/plug
 - phoenixframework/phoenix
@@ -8,3 +8,4 @@
 - reevoo/samuel
 - kosmas/pleaguer
 - pjhampton/Woolly
+- GesJeremie/faker-elixir (Thanks for that man :))
