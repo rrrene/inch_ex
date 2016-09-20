@@ -42,6 +42,8 @@ defmodule InchEx.Reporter.Remote do
 
   # We do not want data from builds which only validate PRs
   defp valid?(:circleci) do
-    is_nil(System.get_env("CI_PULL_REQUEST"))
+    pr = System.get_env("CI_PULL_REQUEST")
+
+    is_nil(pr) || pr == ""
   end
 end
