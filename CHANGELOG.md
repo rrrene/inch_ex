@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.4
+
+- Fix pull request detection on Circle CI
+
 ## 0.5.3
 
 - Restrict `credo` dependency to `:dev` env (thx @georgeguimaraes)
