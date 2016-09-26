@@ -15,7 +15,7 @@ defmodule InchEx.Reporter.Remote do
         _ -> InchEx.Reporter.handle_error "InchEx failed."
       end
     else
-      InchEx.Reporter.handle_error "InchEx skipped."
+      InchEx.Reporter.handle_error "InchEx skipped (#{reason_for_invalidity()})."
     end
   end
 
@@ -28,22 +28,27 @@ defmodule InchEx.Reporter.Remote do
 
   # We do not want data from builds which only validate PRs
   defp valid? do
-    cond do
-      InchEx.Env.circleci? -> valid?(:circleci)
-      InchEx.Env.travis? -> valid?(:travis)
-      true -> true
-    end
+    InchEx.Env.env
+    |> valid?()
   end
+
+  defp reason_for_invalidity do
+    InchEx.Env.env
+    |> reason_for_invalidity()
+  end
+  defp reason_for_invalidity(:circleci), do: "pull request on Circle CI"
+  defp reason_for_invalidity(:travis), do: "pull request on Travis CI"
+  defp reason_for_invalidity(_), do: "could not detect CI service"
 
   # We do not want data from builds which only validate PRs
   defp valid?(:travis) do
     System.get_env("TRAVIS_PULL_REQUEST") == "false"
   end
-
   # We do not want data from builds which only validate PRs
   defp valid?(:circleci) do
     pr = System.get_env("CI_PULL_REQUEST")
 
     is_nil(pr) || pr == ""
   end
+  defp valid?(_), do: true
 end

@@ -22,24 +22,24 @@ defmodule InchEx.Docs.Formatter do
     data = Map.put(data, :objects, list)
 
     data =
-      cond do
-        InchEx.Env.travis? ->
+      case InchEx.Env.env do
+        :travis ->
           data
           |> Map.put(:travis, true)
           |> Map.put(:travis_job_id, System.get_env("TRAVIS_JOB_ID"))
           |> Map.put(:branch_name, System.get_env("TRAVIS_BRANCH"))
 
-        InchEx.Env.circleci? ->
+        :circleci ->
           data
           |> Map.put(:circleci, true)
           |> Map.put(:branch_name, System.get_env("CIRCLE_BRANCH"))
 
-        InchEx.Env.unknown_ci? ->
+        :generic_ci ->
           data
           |> Map.put(:ci, true)
           |> Map.put(:branch_name, InchEx.Git.branch_name)
 
-        true ->
+        _ ->
           data
           |> Map.put(:shell, true)
           |> Map.put(:branch_name, InchEx.Git.branch_name)

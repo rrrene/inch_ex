@@ -1,11 +1,20 @@
 defmodule InchEx.Env do
+  def env do
+    cond do
+      circleci? -> :circleci
+      travis? -> :travis
+      generic_ci? -> :generic_ci
+      true -> :unknown
+    end
+  end
+
   @doc "Returns true if run on arbitrary machine."
   def unknown? do
-    !circleci? && !travis? && !unknown_ci?
+    !circleci? && !travis? && !generic_ci?
   end
 
   @doc "Returns true if not run on any known CI, but seems to be on CI."
-  def unknown_ci? do
+  def generic_ci? do
     !circleci? && !travis? && System.get_env("CI") == "true"
   end
 
