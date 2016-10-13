@@ -18,7 +18,7 @@ defmodule Mix.Tasks.Inchci.Add do
   def run(_) do
     InchEx.Setup.print_heading "Adding project to Inch CI ..."
     if InchEx.GitHub.open_source?(InchEx.Git.repo_https_url) do
-      add_to_inch_ci
+      add_to_inch_ci()
     else
       InchEx.Setup.print @not_github_error
     end

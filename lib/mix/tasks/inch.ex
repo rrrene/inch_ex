@@ -12,8 +12,8 @@ defmodule Mix.Tasks.Inch do
     Mix.Task.run "compile"
 
     case args do
-      ["-v"] -> print_version
-      ["--version"] -> print_version
+      ["-v"] -> print_version()
+      ["--version"] -> print_version()
       _ -> nil
     end
 

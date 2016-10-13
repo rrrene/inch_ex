@@ -140,7 +140,7 @@ defmodule InchEx.Docs.Retriever do
 
   defp get_function(function, source_path, source_url, _all_specs, cb_impls) do
     { { name, arity }, line, type, signature, doc } = function
-    behaviour = Dict.get(cb_impls, { name, arity })
+    behaviour = Map.get(cb_impls, { name, arity })
 
     doc =
       if is_nil(doc) && behaviour do

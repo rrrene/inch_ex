@@ -15,11 +15,11 @@ defmodule InchEx.Reporter.Local do
     Returns a tuple `{:ok, _}` if successful, `{:error, _}` otherwise.
   """
   def run(filename, args \\ []) do
-    if local_inch? do
+    if local_inch?() do
       local_inch(args ++ ["--language=elixir", "--read-from-dump=#{filename}"])
     else
       data = File.read!(filename)
-      case :httpc.request(:post, {inch_cli_api_endpoint, [], 'application/json', data}, [], []) do
+      case :httpc.request(:post, {inch_cli_api_endpoint(), [], 'application/json', data}, [], []) do
         {:ok, {_, _, body}} -> InchEx.Reporter.handle_success(body)
         {:error, {:failed_connect, _, _}} -> InchEx.Reporter.handle_error "Connect failed."
         _ -> InchEx.Reporter.handle_error "InchEx failed."
@@ -42,11 +42,11 @@ defmodule InchEx.Reporter.Local do
   end
 
   defp local_inch? do
-    !is_nil(inch_cmd)
+    !is_nil(inch_cmd())
   end
 
   defp local_inch(args) do
-    case System.cmd(inch_cmd, args) do
+    case System.cmd(inch_cmd(), args) do
       {output, 0} -> InchEx.Reporter.handle_success(output)
       {output, _} -> InchEx.Reporter.handle_error(output)
     end
