@@ -7,8 +7,8 @@ defmodule InchEx.Setup.TravisAfterScript do
   end
 
   def run(_) do
-    if run? do
-      textify |> InchEx.Setup.print
+    if run?() do
+      textify() |> InchEx.Setup.print
     end
   end
 

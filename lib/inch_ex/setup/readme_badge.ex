@@ -6,7 +6,7 @@ defmodule InchEx.Setup.ReadmeBadge do
   end
 
   def run(output) do
-    if run? do
+    if run?() do
       IO.puts ""
       extract_url(output) |> get_badge_url |> textify |> InchEx.Setup.print
     end

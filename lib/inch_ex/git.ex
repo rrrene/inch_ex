@@ -13,7 +13,7 @@ defmodule InchEx.Git do
 
   @doc "Returns the https git URL of the repo."
   def repo_https_url do
-    origin_url |> rewrite_git_ssh_url_to_https
+    origin_url() |> rewrite_git_ssh_url_to_https()
   end
 
   @doc "Returns the git URL of the repo."

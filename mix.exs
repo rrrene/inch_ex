@@ -15,7 +15,7 @@ defmodule InchEx.Mixfile do
          "GitHub" => "https://github.com/rrrene/inch_ex",
         }
       ],
-      deps: deps
+      deps: deps()
     ]
   end
 

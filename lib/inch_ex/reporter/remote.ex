@@ -7,9 +7,9 @@ defmodule InchEx.Reporter.Remote do
     Returns a tuple `{:ok, _}` if successful, `{:error, _}` otherwise.
   """
   def run(filename, _) do
-    if valid? do
+    if valid?() do
       data = File.read!(filename)
-      case :httpc.request(:post, {inch_build_api_endpoint, [], 'application/json', data}, [], []) do
+      case :httpc.request(:post, {inch_build_api_endpoint(), [], 'application/json', data}, [], []) do
         {:ok, {_, _, body}} -> InchEx.Reporter.handle_success(body)
         {:error, {:failed_connect, _, _}} -> InchEx.Reporter.handle_error "InchEx failed to connect."
         _ -> InchEx.Reporter.handle_error "InchEx failed."
