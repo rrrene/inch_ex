@@ -37,7 +37,7 @@ defmodule InchEx.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:poison, "~> 1.5 or ~> 2.0"},
+      {:poison, "~> 1.5 or ~> 2.0 or ~> 3.0"},
       {:credo, "~> 0.4", only: :dev}
     ]
   end
