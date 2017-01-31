@@ -1,5 +1,5 @@
 defmodule InchEx.Reporter.Local do
-  @cli_api_end_point 'http://inch-ci.org/api/v1/cli'
+  @cli_api_end_point 'https://inch-ci.org/api/v1/cli'
 
   @doc """
     Runs inch locally, if installed. If you want to force usage of a particular
