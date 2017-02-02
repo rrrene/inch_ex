@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.5.5
+## 0.5.6
 
 - Fix API call protocol (thx @beckler)
 
