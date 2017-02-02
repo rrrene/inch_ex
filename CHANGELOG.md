@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.5.5
+
+- Fix API call protocol (thx @beckler)
+
 ## 0.5.4
 
 - Fix pull request detection on Circle CI
