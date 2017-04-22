@@ -32,7 +32,7 @@ defmodule Mix.Tasks.Inch do
       cond do
         is_nil(options[:main]) ->
           # Try generating main module's name from the app name
-          Keyword.put(options, :main, (config[:app] |> Atom.to_string |> Mix.Utils.camelize))
+          Keyword.put(options, :main, (config[:app] |> Atom.to_string |> Macro.camelize))
 
         is_atom(options[:main]) ->
           Keyword.update!(options, :main, &inspect/1)
