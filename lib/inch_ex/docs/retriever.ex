@@ -93,7 +93,8 @@ defmodule InchEx.Docs.Retriever do
     specs = Enum.into(Kernel.Typespec.beam_specs(module) || [], %{})
     callbacks = callbacks_implemented_by(module)
 
-    docs = Code.get_docs(module, :docs)
+    docs = module
+           |> Code.get_docs(:docs)
            |> Enum.filter(&has_doc?(&1, type))
            |> Enum.map(&get_function(&1, source_path, source_url, specs, callbacks))
 
@@ -106,7 +107,7 @@ defmodule InchEx.Docs.Retriever do
         docs
       end
 
-    { line, moduledoc } = Code.get_docs(module, :moduledoc)
+    {line, moduledoc} = Code.get_docs(module, :moduledoc)
 
     %InchEx.ModuleObject{
       id: inspect(module),
@@ -141,8 +142,8 @@ defmodule InchEx.Docs.Retriever do
   end
 
   defp get_function(function, source_path, source_url, _all_specs, cb_impls) do
-    { { name, arity }, line, type, signature, doc } = function
-    behaviour = Map.get(cb_impls, { name, arity })
+    {{name, arity}, line, type, signature, doc} = function
+    behaviour = Map.get(cb_impls, {name, arity})
 
     doc =
       if is_nil(doc) && behaviour do
@@ -163,7 +164,7 @@ defmodule InchEx.Docs.Retriever do
   end
 
   defp get_callback(callback, source_path, source_url, _callbacks) do
-    { { name, arity }, line, _kind, doc } = callback
+    {{name, arity}, line, _kind, doc} = callback
 
     %InchEx.FunctionObject{
       id: "#{name}/#{arity}",
@@ -194,20 +195,23 @@ defmodule InchEx.Docs.Retriever do
 
   # Returns a dict of { name, arity } -> [ behaviour_module ].
   defp callbacks_implemented_by(module) do
-    behaviours_implemented_by(module)
-    |> Enum.map(fn behaviour -> Enum.map(callbacks_of(behaviour), &{ &1, behaviour }) end)
+    module
+    |> behaviours_implemented_by()
+    |> Enum.map(fn behaviour -> Enum.map(callbacks_of(behaviour), &{&1, behaviour}) end)
     |> Enum.reduce(%{}, &Enum.into/2)
   end
 
   defp callbacks_of(module) do
-    module.module_info(:attributes)
-    |> Enum.filter(&match?({ :callback, _ }, &1))
-    |> Enum.map(fn {_, [{t,_}|_]} -> t end)
+    :attributes
+    |> module.module_info()
+    |> Enum.filter(&match?({:callback, _}, &1))
+    |> Enum.map(fn {_, [{t, _}|_]} -> t end)
   end
 
   defp behaviours_implemented_by(module) do
-    module.module_info(:attributes)
-    |> Stream.filter(&match?({ :behaviour, _ }, &1))
+    :attributes
+    |> module.module_info()
+    |> Stream.filter(&match?({:behaviour, _}, &1))
     |> Stream.map(fn {_, l} -> l end)
     |> Enum.concat()
   end
