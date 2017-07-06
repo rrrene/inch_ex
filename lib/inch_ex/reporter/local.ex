@@ -30,7 +30,7 @@ defmodule InchEx.Reporter.Local do
   defp inch_cli_api_endpoint do
     case System.get_env("INCH_CLI_API") do
       nil -> @cli_api_end_point
-      url -> to_char_list url
+      url -> to_charlist url
     end
   end
 

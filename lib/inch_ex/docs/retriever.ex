@@ -93,8 +93,10 @@ defmodule InchEx.Docs.Retriever do
     specs = Enum.into(Kernel.Typespec.beam_specs(module) || [], %{})
     callbacks = callbacks_implemented_by(module)
 
-    docs = Enum.filter_map Code.get_docs(module, :docs), &has_doc?(&1, type),
-                           &get_function(&1, source_path, source_url, specs, callbacks)
+    docs = Code.get_docs(module, :docs)
+           |> Enum.filter(&has_doc?(&1, type))
+           |> Enum.map(&get_function(&1, source_path, source_url, specs, callbacks))
+
     docs =
       if type == :behaviour do
         callbacks2 = Enum.into(Kernel.Typespec.beam_callbacks(module) || [], %{})
@@ -130,7 +132,7 @@ defmodule InchEx.Docs.Retriever do
 
   # Skip default docs if starting with _
   defp has_doc?({{name, _}, _, _, _, nil}, _type) do
-    hd(Atom.to_char_list(name)) != ?_
+    hd(Atom.to_charlist(name)) != ?_
   end
 
   # Everything else is ok
@@ -199,7 +201,8 @@ defmodule InchEx.Docs.Retriever do
 
   defp callbacks_of(module) do
     module.module_info(:attributes)
-    |> Enum.filter_map(&match?({ :callback, _ }, &1), fn {_, [{t,_}|_]} -> t end)
+    |> Enum.filter(&match?({ :callback, _ }, &1))
+    |> Enum.map(fn {_, [{t,_}|_]} -> t end)
   end
 
   defp behaviours_implemented_by(module) do
