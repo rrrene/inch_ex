@@ -22,7 +22,7 @@ defmodule InchEx.Reporter.Remote do
   defp inch_build_api_endpoint do
     case System.get_env("INCH_BUILD_API") do
       nil -> @build_api_end_point
-      url -> url |> String.to_char_list
+      url -> url |> String.to_charlist
     end
   end
 

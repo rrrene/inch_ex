@@ -33,8 +33,8 @@ defmodule InchEx.Git do
 
   defp git_output(args) do
     case System.cmd("git", args) do
-      {output, 0} -> String.strip(output)
-      {output, _} -> String.strip(output)
+      {output, 0} -> String.trim(output)
+      {output, _} -> String.trim(output)
     end
   end
 
