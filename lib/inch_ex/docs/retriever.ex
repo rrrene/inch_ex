@@ -1,18 +1,15 @@
 # Original code adapted from ExDoc
 
 defmodule InchEx.ModuleObject do
-  defstruct id: nil, module: nil, moduledoc: nil,
-    docs: [], source: nil, type: nil
+  defstruct id: nil, module: nil, moduledoc: nil, docs: [], source: nil, type: nil
 end
 
 defmodule InchEx.FunctionObject do
-  defstruct id: nil, name: nil, arity: 0, doc: [],
-    source: nil, type: nil, signature: nil
+  defstruct id: nil, name: nil, arity: 0, doc: [], source: nil, type: nil, signature: nil
 end
 
 defmodule InchEx.TypeObject do
-  defstruct id: nil, name: nil, arity: 0, type: nil,
-    doc: nil
+  defstruct id: nil, name: nil, arity: 0, type: nil, doc: nil
 end
 
 defmodule InchEx.Docs.Retriever.Error do
@@ -30,7 +27,7 @@ defmodule InchEx.Docs.Retriever do
   Extract documentation from all modules in the specified directory
   """
   def docs_from_dir(dir, config) do
-    files = Path.wildcard Path.expand("Elixir.*.beam", dir)
+    files = Path.wildcard(Path.expand("Elixir.*.beam", dir))
     docs_from_files(files, config)
   end
 
@@ -49,13 +46,13 @@ defmodule InchEx.Docs.Retriever do
   def docs_from_modules(modules, config) when is_list(modules) do
     modules
     |> Enum.map(&get_module(&1, config))
-    |> Enum.filter(fn(x) -> x end)
+    |> Enum.filter(fn x -> x end)
     |> Enum.sort(&(&1.id <= &2.id))
   end
 
   defp filename_to_module(name) do
-    name = Path.basename name, ".beam"
-    String.to_atom name
+    name = Path.basename(name, ".beam")
+    String.to_atom(name)
   end
 
   # Get all the information from the module and compile
@@ -63,8 +60,8 @@ defmodule InchEx.Docs.Retriever do
   # the module is not available or it was not compiled
   # with --docs flag), we raise an exception.
   defp get_module(module, config) do
-    unless Code.ensure_loaded?(module), do:
-      raise(Error, message: "module #{inspect module} is not defined/available")
+    unless Code.ensure_loaded?(module),
+      do: raise(Error, message: "module #{inspect(module)} is not defined/available")
 
     type = detect_type(module)
 
@@ -77,34 +74,44 @@ defmodule InchEx.Docs.Retriever do
     case Code.get_docs(module, :moduledoc) do
       {_line, false} ->
         nil
+
       {_, _} ->
         module
+
       nil ->
-        raise(Error, message: "module #{inspect module} was not compiled with flag --docs")
+        raise(Error, message: "module #{inspect(module)} was not compiled with flag --docs")
     end
   end
 
   defp generate_node(nil, _, _), do: nil
 
   defp generate_node(module, type, config) do
-    source_url  = config.source_url_pattern
+    source_url = config.source_url_pattern
     source_path = source_path(module, config)
 
     specs = Enum.into(Kernel.Typespec.beam_specs(module) || [], %{})
     callbacks = callbacks_implemented_by(module)
 
-    docs = Enum.filter_map Code.get_docs(module, :docs), &has_doc?(&1, type),
-                           &get_function(&1, source_path, source_url, specs, callbacks)
+    docs =
+      Enum.filter_map(
+        Code.get_docs(module, :docs),
+        &has_doc?(&1, type),
+        &get_function(&1, source_path, source_url, specs, callbacks)
+      )
+
     docs =
       if type == :behaviour do
         callbacks2 = Enum.into(Kernel.Typespec.beam_callbacks(module) || [], %{})
-        Enum.map(Enum.sort(module.__behaviour__(:docs)),
-                        &get_callback(&1, source_path, source_url, callbacks2)) ++ docs
+
+        Enum.map(
+          Enum.sort(module.__behaviour__(:docs)),
+          &get_callback(&1, source_path, source_url, callbacks2)
+        ) ++ docs
       else
         docs
       end
 
-    { line, moduledoc } = Code.get_docs(module, :moduledoc)
+    {line, moduledoc} = Code.get_docs(module, :moduledoc)
 
     %InchEx.ModuleObject{
       id: inspect(module),
@@ -112,7 +119,7 @@ defmodule InchEx.Docs.Retriever do
       type: type,
       moduledoc: moduledoc,
       docs: docs,
-      source: source_link(source_path, source_url, line),
+      source: source_link(source_path, source_url, line)
     }
   end
 
@@ -124,9 +131,9 @@ defmodule InchEx.Docs.Retriever do
   end
 
   # Skip docs explicitly marked as false
-  #defp has_doc?({_, _, _, _, false}, _) do
+  # defp has_doc?({_, _, _, _, false}, _) do
   #  false
-  #end
+  # end
 
   # Skip default docs if starting with _
   defp has_doc?({{name, _}, _, _, _, nil}, _type) do
@@ -139,8 +146,8 @@ defmodule InchEx.Docs.Retriever do
   end
 
   defp get_function(function, source_path, source_url, _all_specs, cb_impls) do
-    { { name, arity }, line, type, signature, doc } = function
-    behaviour = Map.get(cb_impls, { name, arity })
+    {{name, arity}, line, type, signature, doc} = function
+    behaviour = Map.get(cb_impls, {name, arity})
 
     doc =
       if is_nil(doc) && behaviour do
@@ -161,7 +168,7 @@ defmodule InchEx.Docs.Retriever do
   end
 
   defp get_callback(callback, source_path, source_url, _callbacks) do
-    { { name, arity }, line, _kind, doc } = callback
+    {{name, arity}, line, _kind, doc} = callback
 
     %InchEx.FunctionObject{
       id: "#{name}/#{arity}",
@@ -183,28 +190,36 @@ defmodule InchEx.Docs.Retriever do
           %{__exception__: true} -> :exception
           _ -> nil
         end
-      function_exported?(module, :__protocol__, 1) -> :protocol
-      function_exported?(module, :__impl__, 1) -> :impl
-      function_exported?(module, :__behaviour__, 1) -> :behaviour
-      true -> nil
+
+      function_exported?(module, :__protocol__, 1) ->
+        :protocol
+
+      function_exported?(module, :__impl__, 1) ->
+        :impl
+
+      function_exported?(module, :__behaviour__, 1) ->
+        :behaviour
+
+      true ->
+        nil
     end
   end
 
   # Returns a dict of { name, arity } -> [ behaviour_module ].
   defp callbacks_implemented_by(module) do
     behaviours_implemented_by(module)
-    |> Enum.map(fn behaviour -> Enum.map(callbacks_of(behaviour), &{ &1, behaviour }) end)
+    |> Enum.map(fn behaviour -> Enum.map(callbacks_of(behaviour), &{&1, behaviour}) end)
     |> Enum.reduce(%{}, &Enum.into/2)
   end
 
   defp callbacks_of(module) do
     module.module_info(:attributes)
-    |> Enum.filter_map(&match?({ :callback, _ }, &1), fn {_, [{t,_}|_]} -> t end)
+    |> Enum.filter_map(&match?({:callback, _}, &1), fn {_, [{t, _} | _]} -> t end)
   end
 
   defp behaviours_implemented_by(module) do
     module.module_info(:attributes)
-    |> Stream.filter(&match?({ :behaviour, _ }, &1))
+    |> Stream.filter(&match?({:behaviour, _}, &1))
     |> Stream.map(fn {_, l} -> l end)
     |> Enum.concat()
   end

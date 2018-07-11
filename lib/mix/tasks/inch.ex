@@ -4,12 +4,17 @@ defmodule Mix.Tasks.Inch do
   use Mix.Task
 
   @shortdoc "Show documentation evaluation for the project"
-  @version Mix.Project.config[:version]
+  @version Mix.Project.config()[:version]
   @recursive true
 
   @doc false
-  def run(args, config \\ Mix.Project.config, generator \\ &InchEx.generate_docs/4, reporter \\ InchEx.Reporter.Local) do
-    Mix.Task.run "compile"
+  def run(
+        args,
+        config \\ Mix.Project.config(),
+        generator \\ &InchEx.generate_docs/4,
+        reporter \\ InchEx.Reporter.Local
+      ) do
+    Mix.Task.run("compile")
 
     case args do
       ["-v"] -> print_version()
@@ -32,7 +37,7 @@ defmodule Mix.Tasks.Inch do
       cond do
         is_nil(options[:main]) ->
           # Try generating main module's name from the app name
-          Keyword.put(options, :main, (config[:app] |> Atom.to_string |> Mix.Utils.camelize))
+          Keyword.put(options, :main, config[:app] |> Atom.to_string() |> Mix.Utils.camelize())
 
         is_atom(options[:main]) ->
           Keyword.update!(options, :main, &inspect/1)
@@ -41,7 +46,7 @@ defmodule Mix.Tasks.Inch do
           options
       end
 
-    options = Keyword.put_new(options, :source_beam, Mix.Project.compile_path)
+    options = Keyword.put_new(options, :source_beam, Mix.Project.compile_path())
     options = Keyword.put_new(options, :retriever, InchEx.Docs.Retriever)
     options = Keyword.put_new(options, :formatter, InchEx.Docs.Formatter)
 
@@ -51,6 +56,7 @@ defmodule Mix.Tasks.Inch do
 
   defp get_docs_opts(config) do
     docs = config[:docs]
+
     cond do
       is_function(docs, 0) -> docs.()
       is_nil(docs) -> []
@@ -59,6 +65,6 @@ defmodule Mix.Tasks.Inch do
   end
 
   defp print_version do
-    IO.puts "inch_ex #{@version}"
+    IO.puts("inch_ex #{@version}")
   end
 end

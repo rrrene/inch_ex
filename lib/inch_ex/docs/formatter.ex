@@ -1,5 +1,5 @@
 defmodule InchEx.Docs.Formatter do
-  @version Mix.Project.config[:version]
+  @version Mix.Project.config()[:version]
 
   @moduledoc """
   Provide JSON-formatted documentation
@@ -10,19 +10,29 @@ defmodule InchEx.Docs.Formatter do
 
   Returns the path of the generated JSON file.
   """
-  def run(modules, args, config)  do
+  def run(modules, args, config) do
     output = Path.expand(config.output)
-    :ok = File.mkdir_p output
+    :ok = File.mkdir_p(output)
 
-    list = all(modules) # |> Enum.map(fn(x) -> Map.to_list(x) end)
-    data = %{:language => "elixir", :client_name => "inch_ex", :args => args}
-    data = Map.put(data, :client_version, @version)
-    data = Map.put(data, :git_repo_url, InchEx.Git.repo_https_url)
-    data = Map.put(data, :revision, InchEx.Git.revision)
-    data = Map.put(data, :objects, list)
+    data = data(modules, args)
+
+    save_as_json(output, data)
+    Path.join(config.output, "all.json")
+  end
+
+  def data(modules, args) do
+    # |> Enum.map(fn(x) -> Map.to_list(x) end)
+    list = all_objects(modules)
 
     data =
-      case InchEx.Env.env do
+      %{:language => "elixir", :client_name => "inch_ex", :args => args}
+      |> Map.put(:client_version, @version)
+      |> Map.put(:git_repo_url, InchEx.Git.repo_https_url())
+      |> Map.put(:revision, InchEx.Git.revision())
+      |> Map.put(:objects, list)
+
+    data =
+      case InchEx.Env.env() do
         :travis ->
           data
           |> Map.put(:travis, true)
@@ -37,20 +47,23 @@ defmodule InchEx.Docs.Formatter do
         :generic_ci ->
           data
           |> Map.put(:ci, true)
-          |> Map.put(:branch_name, InchEx.Git.branch_name)
+          |> Map.put(:branch_name, InchEx.Git.branch_name())
 
         _ ->
           data
           |> Map.put(:shell, true)
-          |> Map.put(:branch_name, InchEx.Git.branch_name)
+          |> Map.put(:branch_name, InchEx.Git.branch_name())
       end
 
-    save_as_json(output, data)
-    Path.join(config.output, "all.json")
+    data
   end
 
-  defp all(modules) do
-    project_funs = for m <- modules, d <- m.docs, do: fun(m, d)
+  def all_objects(modules) do
+    project_funs =
+      for m <- modules,
+          d <- m.docs,
+          do: fun(m, d)
+
     project_modules = for m <- modules, do: mod(m)
     Enum.concat(project_modules, project_funs)
   end
