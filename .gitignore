@@ -1,6 +1,7 @@
 /_build
 /deps
 /docs/all.json
+/.elixir_ls/
 test.json
 erl_crash.dump
 *.ez
