@@ -4,7 +4,7 @@ defmodule InchEx.Mixfile do
   def project do
     [
       app: :inch_ex,
-      version: "0.5.6",
+      version: "1.0.0",
       elixir: "~> 1.0",
       description: "Provides a Mix task that gives you hints where to improve your inline docs",
       source_url: "https://github.com/rrrene/inch_ex",
@@ -12,7 +12,7 @@ defmodule InchEx.Mixfile do
         maintainers: ["René Föhring"],
         licenses: ["MIT"],
         links: %{
-         "GitHub" => "https://github.com/rrrene/inch_ex",
+          "GitHub" => "https://github.com/rrrene/inch_ex"
         }
       ],
       deps: deps()
