@@ -39,7 +39,7 @@ defmodule InchEx.Mixfile do
     [
       {:poison, "~> 1.5 or ~> 2.0 or ~> 3.0"},
       {:bunt, "~> 0.2"},
-      {:credo, "~> 0.4", only: :dev}
+      {:credo, "~> 0.10", only: :dev}
     ]
   end
 end

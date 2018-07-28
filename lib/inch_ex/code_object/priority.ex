@@ -6,7 +6,7 @@ defmodule InchEx.CodeObject.Priority do
     |> Enum.reduce(0, &(&1 + &2))
   end
 
-  def priority("module", "object_inroot"), do: +3
+  def priority("module", "in_root"), do: +3
   def priority("module", "with_many_children"), do: +2
 
   def priority("module", "without_functions"), do: -2

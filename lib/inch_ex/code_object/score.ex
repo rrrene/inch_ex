@@ -24,9 +24,9 @@ defmodule InchEx.CodeObject.Score do
   # code_example_multi  0.2
   # unconsidered_tag    0.2
 
-  def score("module", "object_withdoc"), do: 100
-  def score("module", "object_withcodeexample"), do: 10
-  def score("module", "object_withcodeexample_multi"), do: 20
+  def score("module", "with_doc"), do: 100
+  def score("module", "with_code_example"), do: 10
+  def score("module", "with_code_example_multi"), do: 20
 
   #########################
   ## FUNCTION
@@ -52,9 +52,10 @@ defmodule InchEx.CodeObject.Score do
   # code_example_multi  0.25
   # unconsidered_tag    0.2
 
-  def score("function", "object_withdoc"), do: 50
-  def score("function", "object_withcodeexample"), do: 10
-  def score("function", "object_withcodeexample_multi"), do: 25
+  def score("function", "with_doc"), do: 50
+  def score("function", "with_code_example"), do: 10
+  def score("function", "with_code_example_multi"), do: 25
+  def score("function", "with_metadata"), do: 20
 
   def score(_, _), do: nil
 

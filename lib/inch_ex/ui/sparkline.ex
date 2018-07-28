@@ -1,7 +1,6 @@
 defmodule InchEx.UI.Sparkline do
   @ticks ~w(▁ ▂ ▃ ▄ ▅ ▆ ▇ █)
   @steps Enum.count(@ticks) - 1
-  @default_separator ""
 
   def run(original_numbers, format_callback \\ nil) do
     numbers = normalize_numbers(original_numbers)

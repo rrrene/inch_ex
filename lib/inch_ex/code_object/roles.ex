@@ -2,17 +2,18 @@ defmodule InchEx.CodeObject.Roles do
   @many_parameters_threshold 5
 
   @role_with_many_children "with_many_children"
-  @role_with_children "module_withchildren"
-  @role_in_root "object_inroot"
-  @role_with_doc "object_withdoc"
-  @role_without_doc "object_withoutdoc"
-  @role_with_codeexample "object_withcodeexample"
-  @role_without_codeexample "object_withoutcodeexample"
+  @role_with_children "with_children"
+  @role_in_root "in_root"
+  @role_with_doc "with_doc"
+  @role_without_doc "without_doc"
+  @role_with_codeexample "with_code_example"
+  @role_without_codeexample "without_code_example"
   @role_with_many_parameters "with_many_parameters"
   @role_with_bang_name "with_bang_name"
+  @role_with_metadata "with_metadata"
   @role_with_questioning_name "with_questioning_name"
-  @role_function_parameter_with_mention "functionparameter_withmention"
-  @role_function_parameter_without_mention "functionparameter_withoutmention"
+  @role_function_parameter_with_mention "with_function_parameter_mention"
+  @role_function_parameter_without_mention "without_function_parameter_mention"
 
   alias InchEx.CodeObject.Doc
 
@@ -24,6 +25,7 @@ defmodule InchEx.CodeObject.Roles do
       children(item),
       parameters(item),
       name(item),
+      metadata(item),
       functionparameter_with_withoutmention(item)
     ]
     |> List.flatten()
@@ -76,6 +78,12 @@ defmodule InchEx.CodeObject.Roles do
     end
   end
 
+  defp metadata(%{"metadata" => metadata}) do
+    Enum.map(metadata, fn {key, _value} ->
+      to_role(@role_with_metadata, key)
+    end)
+  end
+
   defp functionparameter_with_withoutmention(%{"signature" => _} = item) do
     names = fun_params(item)
     doc = Doc.get(item)
@@ -121,17 +129,17 @@ defmodule InchEx.CodeObject.Roles do
   def title(role)
 
   def title("with_many_children"), do: "Has many children"
-  def title("module_withchildren"), do: "Has children"
-  def title("object_inroot"), do: "At the top level"
-  def title("object_withdoc"), do: "Has documentation"
-  def title("object_withoutdoc"), do: "Misses documentation"
-  def title("object_withcodeexample"), do: "Has a code example"
-  def title("object_withoutcodeexample"), do: "Misses a code example"
+  def title("with_children"), do: "Has children"
+  def title("in_root"), do: "At the top level"
+  def title("with_doc"), do: "Has documentation"
+  def title("without_doc"), do: "Misses documentation"
+  def title("with_code_example"), do: "Has a code example"
+  def title("without_code_example"), do: "Misses a code example"
   def title("with_many_parameters"), do: "Has many parameters"
   def title("with_bang_name"), do: "Has a bang name (ending in `!`)"
   def title("with_questioning_name"), do: "Has a questioning name (ending in `?`)"
-  def title("functionparameter_withmention"), do: "Mentions function parameter"
-  def title("functionparameter_withoutmention"), do: "Misses mentioning function parameter"
+  def title("with_function_parameter_mention"), do: "Mentions function parameter"
+  def title("without_function_parameter_mention"), do: "Misses mentioning function parameter"
 
   def title(role), do: "Missing title for `#{role}`."
 end

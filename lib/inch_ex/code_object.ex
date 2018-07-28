@@ -64,8 +64,4 @@ defmodule InchEx.CodeObject do
 
     count - 1
   end
-
-  defp location(%{"source" => source}) do
-    source |> String.split(":")
-  end
 end

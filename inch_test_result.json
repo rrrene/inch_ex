@@ -26,11 +26,11 @@
       "fullname": "InchTest",
       "score": 0,
       "roles": [
-        "object_inroot",
+        "in_root",
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "module_withchildren"
+        "without_doc",
+        "without_code_example",
+        "with_children"
       ],
       "grade": "U"
     },
@@ -40,9 +40,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "without_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype",
         "functionparameter_withbadname"
       ],
@@ -54,8 +54,8 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample"
+        "without_doc",
+        "without_code_example"
       ],
       "grade": "U"
     },
@@ -65,9 +65,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "without_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "U"
@@ -78,11 +78,11 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "without_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype",
-        "functionparameter_withoutmention",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "U"
@@ -93,9 +93,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "without_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "U"
@@ -106,9 +106,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "without_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "U"
@@ -119,8 +119,8 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample"
+        "without_doc",
+        "without_code_example"
       ],
       "grade": "U"
     },
@@ -130,9 +130,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "without_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "U"
@@ -143,9 +143,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "without_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "U"
@@ -156,9 +156,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "module_withchildren"
+        "without_doc",
+        "without_code_example",
+        "with_children"
       ],
       "grade": "U"
     },
@@ -168,9 +168,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "without_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "U"
@@ -181,9 +181,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "module_withchildren"
+        "without_doc",
+        "without_code_example",
+        "with_children"
       ],
       "grade": "U"
     },
@@ -193,9 +193,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "module_withchildren"
+        "without_doc",
+        "without_code_example",
+        "with_children"
       ],
       "grade": "U"
     },
@@ -205,9 +205,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "module_withchildren"
+        "without_doc",
+        "without_code_example",
+        "with_children"
       ],
       "grade": "U"
     },
@@ -217,9 +217,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "module_withchildren"
+        "without_doc",
+        "without_code_example",
+        "with_children"
       ],
       "grade": "U"
     },
@@ -229,9 +229,9 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "module_withchildren"
+        "without_doc",
+        "without_code_example",
+        "with_children"
       ],
       "grade": "U"
     },
@@ -241,12 +241,12 @@
       "score": 0,
       "roles": [
         "object_public",
-        "object_withoutdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "without_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype",
         "functionparameter_withbadname",
-        "functionparameter_withoutmention",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "U"
@@ -257,13 +257,13 @@
       "score": 50,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "with_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype",
-        "functionparameter_withoutmention",
+        "without_function_parameter_mention",
         "functionparameter_withouttype",
-        "functionparameter_withoutmention",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "B"
@@ -274,11 +274,11 @@
       "score": 50,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "with_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype",
-        "functionparameter_withoutmention",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "B"
@@ -289,11 +289,11 @@
       "score": 50,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withoutmention",
+        "with_doc",
+        "without_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype",
-        "functionparameter_withoutmention",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "B"
@@ -304,11 +304,11 @@
       "score": 60,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withcodeexample",
-        "functionparameter_withoutmention",
+        "with_doc",
+        "with_code_example",
+        "without_function_parameter_mention",
         "functionparameter_withouttype",
-        "functionparameter_withoutmention",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "B"
@@ -319,11 +319,11 @@
       "score": 70,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withoutcodeexample",
-        "functionparameter_withmention",
+        "with_doc",
+        "without_code_example",
+        "with_function_parameter_mention",
         "functionparameter_withouttype",
-        "functionparameter_withoutmention",
+        "without_function_parameter_mention",
         "functionparameter_withouttype"
       ],
       "grade": "B"
@@ -334,9 +334,9 @@
       "score": 75,
       "roles": [
         "object_public",
-        "object_withdoc",
+        "with_doc",
         "object_withmultiplecodeexamples",
-        "functionparameter_withoutmention",
+        "without_function_parameter_mention",
         "functionparameter_withouttype",
         "functionparameter_withbadname"
       ],
@@ -348,9 +348,9 @@
       "score": 75,
       "roles": [
         "object_public",
-        "object_withdoc",
+        "with_doc",
         "object_withmultiplecodeexamples",
-        "functionparameter_withoutmention",
+        "without_function_parameter_mention",
         "functionparameter_withouttype",
         "functionparameter_withbadname"
       ],
@@ -362,8 +362,8 @@
       "score": 90,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withoutcodeexample"
+        "with_doc",
+        "without_code_example"
       ],
       "grade": "A"
     },
@@ -373,8 +373,8 @@
       "score": 90,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withoutcodeexample"
+        "with_doc",
+        "without_code_example"
       ],
       "grade": "A"
     },
@@ -384,9 +384,9 @@
       "score": 100,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withoutcodeexample",
-        "module_withchildren"
+        "with_doc",
+        "without_code_example",
+        "with_children"
       ],
       "grade": "A"
     },
@@ -396,12 +396,12 @@
       "score": 100,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withcodeexample",
-        "functionparameter_withmention",
+        "with_doc",
+        "with_code_example",
+        "with_function_parameter_mention",
         "functionparameter_withouttype",
         "functionparameter_withbadname",
-        "functionparameter_withmention",
+        "with_function_parameter_mention",
         "functionparameter_withouttype",
         "functionparameter_withbadname"
       ],
@@ -413,7 +413,7 @@
       "score": 100,
       "roles": [
         "object_public",
-        "object_withdoc",
+        "with_doc",
         "object_withmultiplecodeexamples"
       ],
       "grade": "A"
@@ -424,8 +424,8 @@
       "score": 100,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withcodeexample"
+        "with_doc",
+        "with_code_example"
       ],
       "grade": "A"
     },
@@ -435,12 +435,12 @@
       "score": 100,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withcodeexample",
-        "functionparameter_withmention",
+        "with_doc",
+        "with_code_example",
+        "with_function_parameter_mention",
         "functionparameter_withouttype",
         "functionparameter_withbadname",
-        "functionparameter_withmention",
+        "with_function_parameter_mention",
         "functionparameter_withouttype",
         "functionparameter_withbadname"
       ],
@@ -452,9 +452,9 @@
       "score": 100,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withoutcodeexample",
-        "module_withchildren"
+        "with_doc",
+        "without_code_example",
+        "with_children"
       ],
       "grade": "A"
     },
@@ -464,9 +464,9 @@
       "score": 100,
       "roles": [
         "object_public",
-        "object_withdoc",
-        "object_withoutcodeexample",
-        "module_withchildren"
+        "with_doc",
+        "without_code_example",
+        "with_children"
       ],
       "grade": "A"
     }
