@@ -37,6 +37,7 @@ defmodule InchEx.CodeObject do
       "name" => item["name"],
       "location" => item["location"],
       "type" => item["type"],
+      "metadata" => item["metadata"],
       "score" => score,
       "grade" => grade,
       "priority" => priority,

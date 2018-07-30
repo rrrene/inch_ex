@@ -18,7 +18,7 @@ defmodule InchEx.CodeObjectDocTest do
 
   use ExUnit.Case
 
-  alias InchEx.CodeObject.Doc
+  alias InchEx.CodeObject.Docstring
 
   test "get/1 works as expected /1" do
     input = @example1
@@ -26,7 +26,7 @@ defmodule InchEx.CodeObjectDocTest do
     expected =
       "Splits the enumerable in two lists according to the given function fun.\n\n    iex> Credo.Backports.Enum.chunk_every([1, 2, 3, 4, 5, 6], 2, 1)\n    [[1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6]]\n\n"
 
-    result = Doc.get(input)
+    result = Docstring.get(input)
 
     assert expected == result
   end
@@ -34,6 +34,6 @@ defmodule InchEx.CodeObjectDocTest do
   test "has_code_example?/1 works as expected /1" do
     input = @example1
 
-    assert Doc.has_code_example?(input)
+    assert Docstring.has_code_example?(input)
   end
 end

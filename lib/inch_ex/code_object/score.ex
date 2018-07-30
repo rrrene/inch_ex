@@ -14,19 +14,13 @@ defmodule InchEx.CodeObject.Score do
     |> min(max_score())
   end
 
-  #########################
-  ## MODULE
-  #
-  # docstring           1.0
+  @doc "Returns a score for the given `type` and `role`."
+  def score(type, role)
 
-  # # optional:
-  # code_example_single 0.1
-  # code_example_multi  0.2
-  # unconsidered_tag    0.2
-
-  def score("module", "with_doc"), do: 100
+  def score("module", "with_docstring"), do: 100
   def score("module", "with_code_example"), do: 10
-  def score("module", "with_code_example_multi"), do: 20
+  def score("module", "with_multiple_code_examples"), do: 25
+  def score("module", "with_metadata"), do: 20
 
   #########################
   ## FUNCTION
@@ -52,9 +46,9 @@ defmodule InchEx.CodeObject.Score do
   # code_example_multi  0.25
   # unconsidered_tag    0.2
 
-  def score("function", "with_doc"), do: 50
+  def score("function", "with_docstring"), do: 50
   def score("function", "with_code_example"), do: 10
-  def score("function", "with_code_example_multi"), do: 25
+  def score("function", "with_multiple_code_examples"), do: 25
   def score("function", "with_metadata"), do: 20
 
   def score(_, _), do: nil

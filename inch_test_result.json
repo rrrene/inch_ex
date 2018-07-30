@@ -28,7 +28,7 @@
       "roles": [
         "in_root",
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "with_children"
       ],
@@ -40,7 +40,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype",
@@ -54,7 +54,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example"
       ],
       "grade": "U"
@@ -65,7 +65,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype"
@@ -78,7 +78,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype",
@@ -93,7 +93,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype"
@@ -106,7 +106,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype"
@@ -119,7 +119,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example"
       ],
       "grade": "U"
@@ -130,7 +130,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype"
@@ -143,7 +143,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype"
@@ -156,7 +156,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "with_children"
       ],
@@ -168,7 +168,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype"
@@ -181,7 +181,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "with_children"
       ],
@@ -193,7 +193,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "with_children"
       ],
@@ -205,7 +205,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "with_children"
       ],
@@ -217,7 +217,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "with_children"
       ],
@@ -229,7 +229,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "with_children"
       ],
@@ -241,7 +241,7 @@
       "score": 0,
       "roles": [
         "object_public",
-        "without_doc",
+        "without_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype",
@@ -257,7 +257,7 @@
       "score": 50,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype",
@@ -274,7 +274,7 @@
       "score": 50,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype",
@@ -289,7 +289,7 @@
       "score": 50,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "without_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype",
@@ -304,7 +304,7 @@
       "score": 60,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "with_code_example",
         "without_function_parameter_mention",
         "functionparameter_withouttype",
@@ -319,7 +319,7 @@
       "score": 70,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "without_code_example",
         "with_function_parameter_mention",
         "functionparameter_withouttype",
@@ -334,7 +334,7 @@
       "score": 75,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "object_withmultiplecodeexamples",
         "without_function_parameter_mention",
         "functionparameter_withouttype",
@@ -348,7 +348,7 @@
       "score": 75,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "object_withmultiplecodeexamples",
         "without_function_parameter_mention",
         "functionparameter_withouttype",
@@ -362,7 +362,7 @@
       "score": 90,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "without_code_example"
       ],
       "grade": "A"
@@ -373,7 +373,7 @@
       "score": 90,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "without_code_example"
       ],
       "grade": "A"
@@ -384,7 +384,7 @@
       "score": 100,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "without_code_example",
         "with_children"
       ],
@@ -396,7 +396,7 @@
       "score": 100,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "with_code_example",
         "with_function_parameter_mention",
         "functionparameter_withouttype",
@@ -413,7 +413,7 @@
       "score": 100,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "object_withmultiplecodeexamples"
       ],
       "grade": "A"
@@ -424,7 +424,7 @@
       "score": 100,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "with_code_example"
       ],
       "grade": "A"
@@ -435,7 +435,7 @@
       "score": 100,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "with_code_example",
         "with_function_parameter_mention",
         "functionparameter_withouttype",
@@ -452,7 +452,7 @@
       "score": 100,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "without_code_example",
         "with_children"
       ],
@@ -464,7 +464,7 @@
       "score": 100,
       "roles": [
         "object_public",
-        "with_doc",
+        "with_docstring",
         "without_code_example",
         "with_children"
       ],

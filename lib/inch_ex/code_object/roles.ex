@@ -1,13 +1,16 @@
 defmodule InchEx.CodeObject.Roles do
+  @ignored_metadata_keys [:defaults]
+
   @many_parameters_threshold 5
 
   @role_with_many_children "with_many_children"
   @role_with_children "with_children"
   @role_in_root "in_root"
-  @role_with_doc "with_doc"
-  @role_without_doc "without_doc"
-  @role_with_codeexample "with_code_example"
-  @role_without_codeexample "without_code_example"
+  @role_with_doc "with_docstring"
+  @role_without_doc "without_docstring"
+  @role_with_code_example "with_code_example"
+  @role_with_multiple_code_examples "with_multiple_code_examples"
+  @role_without_code_example "without_code_example"
   @role_with_many_parameters "with_many_parameters"
   @role_with_bang_name "with_bang_name"
   @role_with_metadata "with_metadata"
@@ -15,13 +18,13 @@ defmodule InchEx.CodeObject.Roles do
   @role_function_parameter_with_mention "with_function_parameter_mention"
   @role_function_parameter_without_mention "without_function_parameter_mention"
 
-  alias InchEx.CodeObject.Doc
+  alias InchEx.CodeObject.Docstring
 
   def run(item) do
     [
       in_root(item),
-      with_withoutdoc(item),
-      with_withoutcodeexample(item),
+      with_without_doc(item),
+      with_without_code_example(item),
       children(item),
       parameters(item),
       name(item),
@@ -46,19 +49,19 @@ defmodule InchEx.CodeObject.Roles do
   def children(%{"children" => x}) when x > 1, do: to_role(@role_with_children)
   def children(_), do: nil
 
-  def with_withoutdoc(item) do
-    if Doc.present?(item) do
+  def with_without_doc(item) do
+    if Docstring.present?(item) do
       to_role(@role_with_doc)
     else
       to_role(@role_without_doc)
     end
   end
 
-  def with_withoutcodeexample(item) do
-    if Doc.has_code_example?(item) do
-      to_role(@role_with_codeexample)
-    else
-      to_role(@role_without_codeexample)
+  def with_without_code_example(item) do
+    cond do
+      Docstring.has_multiple_code_examples?(item) -> to_role(@role_with_multiple_code_examples)
+      Docstring.has_code_example?(item) -> to_role(@role_with_code_example)
+      true -> to_role(@role_without_code_example)
     end
   end
 
@@ -79,17 +82,19 @@ defmodule InchEx.CodeObject.Roles do
   end
 
   defp metadata(%{"metadata" => metadata}) do
-    Enum.map(metadata, fn {key, _value} ->
+    metadata
+    |> Map.drop(@ignored_metadata_keys)
+    |> Enum.map(fn {key, _value} ->
       to_role(@role_with_metadata, key)
     end)
   end
 
   defp functionparameter_with_withoutmention(%{"signature" => _} = item) do
     names = fun_params(item)
-    doc = Doc.get(item)
+    doc = Docstring.get(item)
 
     Enum.map(names, fn name ->
-      if Doc.mentions?(doc, name) do
+      if Docstring.mentions?(doc, name) do
         to_role(@role_function_parameter_with_mention, name)
       else
         to_role(@role_function_parameter_without_mention, name)
@@ -131,9 +136,10 @@ defmodule InchEx.CodeObject.Roles do
   def title("with_many_children"), do: "Has many children"
   def title("with_children"), do: "Has children"
   def title("in_root"), do: "At the top level"
-  def title("with_doc"), do: "Has documentation"
-  def title("without_doc"), do: "Misses documentation"
+  def title("with_docstring"), do: "Has documentation"
+  def title("without_docstring"), do: "Misses documentation"
   def title("with_code_example"), do: "Has a code example"
+  def title("with_multiple_code_examples"), do: "Has multiple code examples"
   def title("without_code_example"), do: "Misses a code example"
   def title("with_many_parameters"), do: "Has many parameters"
   def title("with_bang_name"), do: "Has a bang name (ending in `!`)"

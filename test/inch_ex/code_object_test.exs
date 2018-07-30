@@ -23,7 +23,7 @@ defmodule InchEx.CodeObjectTest do
       "fullname" => "Credo.Backports.Enum.chunk_every/3",
       "score" => 60,
       "roles" => [
-        "with_doc",
+        "with_docstring",
         "with_code_example",
         "without_function_parameter_mention",
         "without_function_parameter_mention",
@@ -52,7 +52,7 @@ defmodule InchEx.CodeObjectTest do
       "fullname" => "Credo.CLI",
       "score" => 100,
       "roles" => [
-        "with_doc",
+        "with_docstring",
         "without_code_example"
       ],
       "grade" => "A"

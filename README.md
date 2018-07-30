@@ -186,7 +186,7 @@ René Föhring (@rrrene)
 
 ## Credits
 
-InchEx ows its existence to the extensive study and "code borrowing" from ExDoc.
+The first version of InchEx owed its existence to the extensive study and "code borrowing" from ExDoc.
 
 
 

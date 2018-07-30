@@ -1,7 +1,6 @@
 defmodule InchEx.CLI.Commands.ExplainOutput do
   alias InchEx.CLI
   alias InchEx.UI
-  alias InchEx.CodeObject.Grade
   alias InchEx.CodeObject.Priority
   alias InchEx.CodeObject.Score
 
@@ -10,6 +9,8 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
   @column_width3 5
 
   @doc false
+  def call(result)
+
   def call(results) when is_list(results) do
     Enum.each(results, &call/1)
   end
@@ -18,7 +19,6 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
     term_width = CLI.term_columns()
 
     %{
-      "grade" => grade,
       "location" => location,
       "name" => name,
       "priority" => priority,
@@ -27,9 +27,8 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
       "type" => type
     } = result
 
-    # Grade.color(grade)
     color = :orange
-    bg_color = Grade.bg_color(grade)
+    bg_color = nil
     bg_color = if bg_color, do: :"#{bg_color}_background", else: :"#{color}_background"
 
     UI.puts()

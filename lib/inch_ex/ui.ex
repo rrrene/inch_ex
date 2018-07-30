@@ -59,8 +59,10 @@ defmodule InchEx.UI do
 
       iex> Credo.CLI.Output.UI.truncate("  7 chars\\n", 7)
       "  7 ch…"
+
       iex> Credo.CLI.Output.UI.truncate("  more than 7\\n", 7)
       "  more…"
+
       iex> Credo.CLI.Output.UI.truncate("  more than 7\\n", 7, " ...")
       "  m ..."
   """
