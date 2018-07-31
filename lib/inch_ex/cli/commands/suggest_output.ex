@@ -9,7 +9,7 @@ defmodule InchEx.CLI.Commands.SuggestOutput do
   alias InchEx.UI.Sparkline
 
   @doc false
-  def call(results) do
+  def call(results, options) do
     term_width = CLI.term_columns()
 
     result_map =
@@ -17,16 +17,25 @@ defmodule InchEx.CLI.Commands.SuggestOutput do
       |> sort_results()
       |> Enum.group_by(& &1["grade"])
 
-    Enum.each(@suggest_grades, &puts_results_for_grade(&1, result_map[&1], term_width))
+    shown_results =
+      case options.switches do
+        %{all: true} -> 1000
+        _ -> 10
+      end
+
+    Enum.each(
+      @suggest_grades,
+      &puts_results_for_grade(&1, result_map[&1], shown_results, term_width)
+    )
 
     puts_suggested_files(results)
     puts_cry_for_help()
     puts_grade_distribution(result_map)
   end
 
-  defp puts_results_for_grade(_grade, nil, _term_width), do: nil
+  defp puts_results_for_grade(_grade, nil, _shown_results, _term_width), do: nil
 
-  defp puts_results_for_grade(grade, results_for_grade, term_width) do
+  defp puts_results_for_grade(grade, results_for_grade, shown_results, term_width) do
     color = Grade.color(grade)
     bg_color = Grade.bg_color(grade)
     bg_color = if bg_color, do: :"#{bg_color}_background", else: :"#{color}_background"
@@ -48,7 +57,7 @@ defmodule InchEx.CLI.Commands.SuggestOutput do
     UI.puts([color, UI.edge()])
 
     results_for_grade
-    |> Enum.take(10)
+    |> Enum.take(shown_results)
     |> Enum.each(fn item ->
       arrow = Priority.arrow(item["priority"])
 

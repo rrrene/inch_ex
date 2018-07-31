@@ -7,15 +7,15 @@ defmodule InchEx.CLI.Commands.SuggestCommand do
 
   @doc false
   def call(argv) do
-    argv
-    |> locate_docs()
-    |> fetch_and_evaluate_docs()
-    |> display_results()
-  end
-
-  defp locate_docs(argv) do
     options = Options.parse(argv)
 
+    options
+    |> locate_docs()
+    |> fetch_and_evaluate_docs()
+    |> display_results(options)
+  end
+
+  defp locate_docs(options) do
     Docs.beam_files(options.path)
   end
 
@@ -31,7 +31,7 @@ defmodule InchEx.CLI.Commands.SuggestCommand do
     |> CodeObject.eval()
   end
 
-  defp display_results(results) do
-    SuggestOutput.call(results)
+  defp display_results(results, options) do
+    SuggestOutput.call(results, options)
   end
 end

@@ -131,6 +131,7 @@ defmodule InchEx.CodeObject.Roles do
 
   #
 
+  @doc "Returns a human-readable title for the given `role`."
   def title(role)
 
   def title("with_many_children"), do: "Has many children"
