@@ -1,6 +1,7 @@
 defmodule InchEx.CLI do
-  alias InchEx.CLI.Commands.SuggestCommand
   alias InchEx.CLI.Commands.ExplainCommand
+  alias InchEx.CLI.Commands.InfoCommand
+  alias InchEx.CLI.Commands.SuggestCommand
 
   def main(argv) do
     InchEx.Application.start(nil, nil)
@@ -12,6 +13,10 @@ defmodule InchEx.CLI do
 
   defp determine_command([]) do
     {SuggestCommand, []}
+  end
+
+  defp determine_command(["info" | _] = argv) do
+    {InfoCommand, argv}
   end
 
   defp determine_command([maybe_file_and_line_no] = argv) do
