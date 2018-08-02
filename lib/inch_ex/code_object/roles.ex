@@ -105,25 +105,26 @@ defmodule InchEx.CodeObject.Roles do
   defp functionparameter_with_withoutmention(_), do: nil
 
   defp fun_params(%{"signature" => list}) do
+    list =
+      Enum.map(list, fn string ->
+        {_fun_name, _meta, parameters} = Code.string_to_quoted!(string)
+
+        parameters
+      end)
+
     {_, list} = Macro.prewalk(list, [], &traverse_fun_params/2)
 
-    list
+    Enum.reverse(list)
   end
 
   defp fun_params(_), do: nil
 
-  defp traverse_fun_params([name, _meta, nil], acc) do
+  defp traverse_fun_params({name, _meta, nil}, acc) when is_atom(name) do
     {nil, [name] ++ acc}
   end
 
-  defp traverse_fun_params(item, acc) when is_list(item) do
+  defp traverse_fun_params(item, acc) do
     {item, acc}
-  end
-
-  defp traverse_fun_params(_item, acc) do
-    # IO.inspect(item, label: "traverse_fun_params")
-
-    {nil, acc}
   end
 
   defp to_role(value), do: to_string(value)
