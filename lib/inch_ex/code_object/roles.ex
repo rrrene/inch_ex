@@ -33,7 +33,6 @@ defmodule InchEx.CodeObject.Roles do
     ]
     |> List.flatten()
     |> Enum.reject(&is_nil/1)
-    |> Enum.map(&to_string/1)
   end
 
   def in_root(%{"name" => name}) do
@@ -91,13 +90,14 @@ defmodule InchEx.CodeObject.Roles do
 
   defp functionparameter_with_withoutmention(%{"signature" => _} = item) do
     names = fun_params(item)
+    count = Enum.count(names)
     doc = Docstring.get(item)
 
     Enum.map(names, fn name ->
       if Docstring.mentions?(doc, name) do
-        to_role(@role_function_parameter_with_mention, name)
+        to_role(@role_function_parameter_with_mention, {name, count})
       else
-        to_role(@role_function_parameter_without_mention, name)
+        to_role(@role_function_parameter_without_mention, {name, count})
       end
     end)
   end
@@ -127,27 +127,31 @@ defmodule InchEx.CodeObject.Roles do
     {item, acc}
   end
 
-  defp to_role(value), do: to_string(value)
-  defp to_role(value, _), do: to_string(value)
+  defp to_role(role_name), do: {role_name, nil}
+  defp to_role(role_name, meta), do: {role_name, meta}
 
   #
 
   @doc "Returns a human-readable title for the given `role`."
   def title(role)
 
-  def title("with_many_children"), do: "Has many children"
-  def title("with_children"), do: "Has children"
-  def title("in_root"), do: "At the top level"
-  def title("with_docstring"), do: "Has documentation"
-  def title("without_docstring"), do: "Misses documentation"
-  def title("with_code_example"), do: "Has a code example"
-  def title("with_multiple_code_examples"), do: "Has multiple code examples"
-  def title("without_code_example"), do: "Misses a code example"
-  def title("with_many_parameters"), do: "Has many parameters"
-  def title("with_bang_name"), do: "Has a bang name (ending in `!`)"
-  def title("with_questioning_name"), do: "Has a questioning name (ending in `?`)"
-  def title("with_function_parameter_mention"), do: "Mentions function parameter"
-  def title("without_function_parameter_mention"), do: "Misses mentioning function parameter"
+  def title({"with_many_children", _}), do: "Has many children"
+  def title({"with_children", _}), do: "Has children"
+  def title({"in_root", _}), do: "At the top level"
+  def title({"with_docstring", _}), do: "Has documentation"
+  def title({"without_docstring", _}), do: "Misses documentation"
+  def title({"with_code_example", _}), do: "Has a code example"
+  def title({"with_multiple_code_examples", _}), do: "Has multiple code examples"
+  def title({"without_code_example", _}), do: "Misses a code example"
+  def title({"with_many_parameters", _}), do: "Has many parameters"
+  def title({"with_bang_name", _}), do: "Has a bang name (ending in `!`)"
+  def title({"with_questioning_name", _}), do: "Has a questioning name (ending in `?`)"
 
-  def title(role), do: "Missing title for `#{role}`."
+  def title({"with_function_parameter_mention", {name, _count}}),
+    do: "Mentions function parameter `#{name}`"
+
+  def title({"without_function_parameter_mention", {name, _count}}),
+    do: "Misses mentioning function parameter `#{name}`"
+
+  def title({role, _}), do: "Missing title for `#{role}`."
 end

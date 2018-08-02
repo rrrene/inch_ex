@@ -6,23 +6,23 @@ defmodule InchEx.CodeObject.Priority do
     |> Enum.reduce(0, &(&1 + &2))
   end
 
-  def priority("module", "in_root"), do: +3
-  def priority("module", "with_many_children"), do: +2
+  def priority("module", {"in_root", _}), do: +3
+  def priority("module", {"with_many_children", _}), do: +2
 
-  def priority("module", "without_functions"), do: -2
-  def priority("module", "only_modules_as_children"), do: -2
+  def priority("module", {"without_functions", _}), do: -2
+  def priority("module", {"only_modules_as_children", _}), do: -2
 
-  def priority("function", "with_many_parameters"), do: +2
-  def priority("function", "with_bang_name"), do: +3
-  def priority("function", "with_questioning_name"), do: -4
+  def priority("function", {"with_many_parameters", _}), do: +2
+  def priority("function", {"with_bang_name", _}), do: +3
+  def priority("function", {"with_questioning_name", _}), do: -4
 
   def priority(_, _), do: nil
 
-  def potential_priority(type, role) do
+  def potential_priority(type, {role, value}) do
     if String.match?(role, ~r/(without)/) do
       with_role = String.replace(role, "without", "with")
 
-      priority(type, with_role)
+      priority(type, {with_role, value})
     end
   end
 

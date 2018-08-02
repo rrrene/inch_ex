@@ -4,7 +4,7 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
   alias InchEx.CodeObject.Priority
   alias InchEx.CodeObject.Score
 
-  @column_width1 40
+  @column_width1 50
   @column_width2 10
   @column_width3 5
 
@@ -48,13 +48,13 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
 
     UI.puts([color, :faint, UI.edge(), " ", :faint, String.pad_trailing("", term_width, "-")])
 
-    Enum.each(roles, fn role ->
-      score = Score.score(type, role) || 0
-      priority = Priority.priority(type, role) || 0
-      potential_score = Score.potential_score(type, role)
-      potential_priority = Priority.potential_priority(type, role)
+    Enum.each(roles, fn role_tuple ->
+      score = Score.score(type, role_tuple) || 0
+      priority = Priority.priority(type, role_tuple) || 0
+      potential_score = Score.potential_score(type, role_tuple)
+      potential_priority = Priority.potential_priority(type, role_tuple)
 
-      role_title = InchEx.CodeObject.Roles.title(role)
+      role_title = InchEx.CodeObject.Roles.title(role_tuple)
 
       role_text =
         if potential_score do
