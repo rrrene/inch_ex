@@ -6,6 +6,8 @@ defmodule Mix.Tasks.Inch do
 
   @doc false
   def run(argv) do
+    Mix.Task.run("compile")
+
     InchEx.CLI.main(argv)
   end
 end
