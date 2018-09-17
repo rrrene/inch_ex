@@ -49,9 +49,9 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
     UI.puts([color, :faint, UI.edge(), " ", :faint, String.pad_trailing("", term_width, "-")])
 
     Enum.each(roles, fn role_tuple ->
-      score = Score.score(type, role_tuple) || 0
+      score = Score.score(type, role_tuple, roles) || 0
       priority = Priority.priority(type, role_tuple) || 0
-      potential_score = Score.potential_score(type, role_tuple)
+      potential_score = Score.potential_score(type, role_tuple, roles)
       potential_priority = Priority.potential_priority(type, role_tuple)
 
       role_title = InchEx.CodeObject.Roles.title(role_tuple)
@@ -65,9 +65,9 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
 
       role_score =
         if potential_score do
-          [:faint, String.pad_leading(to_string(potential_score), @column_width2)]
+          [:faint, String.pad_leading("(#{potential_score})", @column_width2)]
         else
-          String.pad_leading(to_string(score), @column_width2)
+          String.pad_leading("#{score} ", @column_width2)
         end
 
       role_priority =
@@ -77,16 +77,18 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
           String.pad_leading(to_string(priority), @column_width3)
         end
 
-      UI.puts([
-        color,
-        :faint,
-        UI.edge(),
-        :reset,
-        " ",
-        role_text,
-        role_score,
-        role_priority
-      ])
+      if score > 0 || (!is_nil(potential_score) && potential_score > 0) do
+        UI.puts([
+          color,
+          :faint,
+          UI.edge(),
+          :reset,
+          " ",
+          role_text,
+          role_score,
+          role_priority
+        ])
+      end
     end)
 
     UI.puts([color, :faint, UI.edge(), " ", :faint, String.pad_trailing("", term_width, "-")])
@@ -102,7 +104,7 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
       :reset,
       " ",
       String.pad_trailing(text, @column_width1),
-      String.pad_leading(to_string(score), @column_width2),
+      String.pad_leading("#{score} ", @column_width2),
       String.pad_leading(to_string(priority), @column_width3)
     ])
 

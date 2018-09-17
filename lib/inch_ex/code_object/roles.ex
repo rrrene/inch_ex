@@ -5,6 +5,7 @@ defmodule InchEx.CodeObject.Roles do
 
   @role_with_many_children "with_many_children"
   @role_with_children "with_children"
+  @role_without_children "without_children"
   @role_in_root "in_root"
   @role_with_doc "with_docstring"
   @role_without_doc "without_docstring"
@@ -12,6 +13,8 @@ defmodule InchEx.CodeObject.Roles do
   @role_with_multiple_code_examples "with_multiple_code_examples"
   @role_without_code_example "without_code_example"
   @role_with_many_parameters "with_many_parameters"
+  @role_with_parameters "with_parameters"
+  @role_without_parameters "without_parameters"
   @role_with_bang_name "with_bang_name"
   @role_with_metadata "with_metadata"
   @role_with_questioning_name "with_questioning_name"
@@ -46,6 +49,7 @@ defmodule InchEx.CodeObject.Roles do
 
   def children(%{"children" => x}) when x > 20, do: to_role(@role_with_many_children)
   def children(%{"children" => x}) when x > 1, do: to_role(@role_with_children)
+  def children(%{"children" => x}) when x == 0, do: to_role(@role_without_children)
   def children(_), do: nil
 
   def with_without_doc(item) do
@@ -66,9 +70,13 @@ defmodule InchEx.CodeObject.Roles do
 
   def parameters(item) do
     names = item |> fun_params() |> List.wrap()
+    count = Enum.count(names)
 
-    if Enum.count(names) > @many_parameters_threshold do
-      to_role(@role_with_many_parameters)
+    cond do
+      count > @many_parameters_threshold -> to_role(@role_with_many_parameters)
+      count > 0 -> to_role(@role_with_parameters)
+      count == 0 -> to_role(@role_without_parameters)
+      true -> nil
     end
   end
 
