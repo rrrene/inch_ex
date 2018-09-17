@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1
+
+- Add hint about incompatibility with Elixir 1.7
+
 ## 1.0.0
 
 No changes after `v0.5.6`.
