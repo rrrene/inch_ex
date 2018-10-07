@@ -1,10 +1,10 @@
 defmodule InchEx.CLI.Options do
   @switches [
-    all: :boolean
+    all: :boolean,
     # color: :boolean,
     # debug: :boolean,
     # mute_exit_status: :boolean,
-    # format: :string,
+    format: :string
     # help: :boolean,
     # ignore: :string,
     # only: :string,

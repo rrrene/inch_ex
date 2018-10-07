@@ -9,6 +9,13 @@ defmodule InchEx.CLI.Commands.SuggestOutput do
   alias InchEx.UI.Sparkline
 
   @doc false
+  def call(results, %{switches: %{format: "json"}}) do
+    results
+    |> InchEx.JSON.Mapping.from_results()
+    |> InchEx.JSON.encode!()
+    |> IO.puts()
+  end
+
   def call(results, options) do
     term_width = CLI.term_columns()
 

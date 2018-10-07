@@ -11,13 +11,13 @@ defmodule InchExTest do
     input =
       "inch_test_input.json"
       |> File.read!()
-      |> Poison.decode!()
+      |> Jason.decode!()
       |> Map.get("objects")
 
     expected =
       "inch_test_result.json"
       |> File.read!()
-      |> Poison.decode!()
+      |> Jason.decode!()
       |> Map.get("objects")
 
     results = InchEx.CodeObject.eval(input)
