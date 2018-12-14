@@ -17,6 +17,9 @@ defmodule InchEx.CodeObject do
     |> Enum.map(&prepare(&1, list))
     |> Enum.map(&transform/1)
   end
+  
+  # Ignore files without docs chunk
+  def eval(nil), do: []
 
   @doc "Injects additional attributes into the given map"
   def cast(item)
