@@ -1,6 +1,6 @@
 defmodule InchEx.CLI.Commands.ReportCommand do
   @env_var_skip_report "INCH_SKIP_REPORT"
-  @build_api_end_point "http://localhost:4000/api/v2/builds"
+  @build_api_end_point "https://inch-ci.org/api/v2/builds"
 
   alias InchEx.CLI.Options
   alias InchEx.CodeObject
