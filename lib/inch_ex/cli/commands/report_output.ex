@@ -28,12 +28,17 @@ defmodule InchEx.CLI.Commands.ReportOutput do
   end
 
   def handle_error(value) do
-    IO.puts(value)
+    [:red, value]
+    |> IO.ANSI.format()
+    |> IO.puts()
   end
 
   def handle_success(response) do
-    IO.puts("InchEx succeeded.")
-    IO.puts(inspect(response, pretty: true))
+    IO.puts("InchEx succeeded. Server response:")
+
+    [:green, response]
+    |> IO.ANSI.format()
+    |> IO.puts()
   end
 
   defp merge_metadata(map) do
