@@ -3,6 +3,8 @@ defmodule InchEx.CLI.Git do
     Provide information about the Git repo in the cwd.
   """
 
+  alias InchEx.CLI.Env
+
   @doc """
     Returns true if there are any modified or untracked files in the
     working dir.
@@ -23,7 +25,11 @@ defmodule InchEx.CLI.Git do
 
   @doc "Returns the name of the current branch."
   def branch_name do
-    git_output(["rev-parse", "--abbrev-ref", "HEAD"])
+    case Env.env() do
+      :travis -> System.get_env("TRAVIS_BRANCH")
+      :circleci -> System.get_env("CIRCLE_BRANCH")
+      _ -> git_output(["rev-parse", "--abbrev-ref", "HEAD"])
+    end
   end
 
   @doc "Returns the SHA1 of the current revision."
