@@ -51,7 +51,7 @@ $ mix inch
 ┃  U  ↑  Foo
 ┃  U  ↗  Foo.filename/1
 
-Grade distribution (undocumented, C, B, A):  █  ▁ ▄ ▄
+Grade distribution (A, B, C, undocumented): ▄ ▄ ▁ █
 ```
 
 
@@ -109,7 +109,7 @@ Inch does not give you a grade for your whole codebase.
 
 "Why?" you might ask. Look at the example below:
 
-    Grade distribution (undocumented, C, B, A):  ▄  ▁ ▄ █
+    Grade distribution (A, B, C, undocumented): █ ▄ ▁ ▄
 
 In this example there is a part of code that is still undocumented, but
 the vast majority of code is rated A or B.
