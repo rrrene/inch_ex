@@ -115,8 +115,11 @@ defmodule InchEx.CLI.Commands.SuggestOutput do
         [Enum.at(colors, index), value, " "]
       end)
 
+    values = Enum.join(distribution, ", ")
+
     UI.puts()
     UI.puts(["Grade distribution (undocumented, C, B, A): ", sparkline])
+    UI.puts(["Grade values: ", values])
     UI.puts()
     UI.puts([:faint, "Only considering priority objects: ↑ ↗ →  (use `--help` for options)."])
   end
