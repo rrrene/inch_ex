@@ -1,5 +1,5 @@
 defmodule InchEx.CLI.Commands.SuggestOutput do
-  @distribution_grades ~w(U C B A)
+  @distribution_grades ~w(A B C U)
   @suggest_grades ~w(B C U)
 
   alias InchEx.CLI
@@ -118,7 +118,7 @@ defmodule InchEx.CLI.Commands.SuggestOutput do
     values = Enum.join(distribution, ", ")
 
     UI.puts()
-    UI.puts(["Grade distribution (undocumented, C, B, A): ", sparkline])
+    UI.puts(["Grade distribution (A, B, C, undocumented): ", sparkline])
     UI.puts(["Grade values: ", values])
     UI.puts()
     UI.puts([:faint, "Only considering priority objects: ↑ ↗ →  (use `--help` for options)."])
