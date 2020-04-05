@@ -4,7 +4,7 @@ defmodule InchEx.Mixfile do
   def project do
     [
       app: :inch_ex,
-      version: "2.0.0",
+      version: "2.1.0-rc.1",
       elixir: ">= 1.7.0",
       description: "Provides a Mix task that gives you hints where to improve your inline docs",
       source_url: "https://github.com/rrrene/inch_ex",
