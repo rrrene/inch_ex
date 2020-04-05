@@ -87,12 +87,15 @@ defmodule InchEx.CLI.Commands.ReportCommand do
 
   defp valid?(:generic_ci), do: true
 
+  defp valid?(:github_actions), do: true
+
   defp valid?(_), do: false
 
   defp env do
     cond do
       circleci?() -> :circleci
       travis?() -> :travis
+      github_actions?() -> :github_actions
       generic_ci?() -> :generic_ci
       true -> :unknown
     end
@@ -100,7 +103,12 @@ defmodule InchEx.CLI.Commands.ReportCommand do
 
   # Returns true if not run on any known CI, but seems to be on CI.
   defp generic_ci? do
-    !circleci?() && !travis?() && System.get_env("CI") == "true"
+    !github_actions?() && !circleci?() && !travis?() && System.get_env("CI") == "true"
+  end
+
+  # Returns true if run on GitHub Actions.
+  defp github_actions? do
+    System.get_env("GITHUB_ACTIONS") == "true"
   end
 
   # Returns true if run on CircleCI.
