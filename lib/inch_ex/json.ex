@@ -19,12 +19,12 @@ defmodule InchEx.JSON do
       Map.put(base, "roles", roles)
     end
 
-    defp listify(t) when is_tuple(t) do
-      t
+    defp listify(tuple) when is_tuple(tuple) do
+      tuple
       |> Tuple.to_list()
       |> Enum.map(&listify/1)
     end
 
-    defp listify(v), do: v
+    defp listify(value), do: value
   end
 end
