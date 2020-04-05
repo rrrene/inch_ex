@@ -10,25 +10,25 @@ defmodule InchEx.CLI.Commands.SuggestOutput do
 
   @doc false
   def call(results, %{switches: %{format: "json"}}) do
+    result_map = results_grouped_by_grade(results)
+    distribution = distribution_for_grades(@distribution_grades, result_map) |> Enum.into(%{})
+    data = %{"grade_distribution" => distribution}
+
     results
-    |> InchEx.JSON.Mapping.from_results()
+    |> InchEx.JSON.Mapping.from_results(data)
     |> InchEx.JSON.encode!()
     |> IO.puts()
   end
 
   def call(results, options) do
-    term_width = CLI.term_columns()
-
-    result_map =
-      results
-      |> sort_results()
-      |> Enum.group_by(& &1["grade"])
-
     shown_results =
       case options.switches do
-        %{all: true} -> 1000
+        %{all: true} -> 1_000_000
         _ -> 10
       end
+
+    term_width = CLI.term_columns()
+    result_map = results_grouped_by_grade(results)
 
     Enum.each(
       @suggest_grades,
@@ -105,8 +105,7 @@ defmodule InchEx.CLI.Commands.SuggestOutput do
   end
 
   defp puts_grade_distribution(result_map) do
-    distribution =
-      Enum.map(@distribution_grades, &(result_map[&1] |> List.wrap() |> Enum.count()))
+    distribution = @distribution_grades |> distribution_for_grades(result_map) |> Keyword.values()
 
     colors = Enum.map(@distribution_grades, &Grade.color/1)
 
@@ -119,6 +118,23 @@ defmodule InchEx.CLI.Commands.SuggestOutput do
     UI.puts(["Grade distribution (undocumented, C, B, A): ", sparkline])
     UI.puts()
     UI.puts([:faint, "Only considering priority objects: ↑ ↗ →  (use `--help` for options)."])
+  end
+
+  defp results_grouped_by_grade(results) do
+    results
+    |> sort_results()
+    |> Enum.group_by(& &1["grade"])
+  end
+
+  defp distribution_for_grades(grades, result_map) do
+    Enum.map(grades, fn grade ->
+      count =
+        result_map[grade]
+        |> List.wrap()
+        |> Enum.count()
+
+      {grade, count}
+    end)
   end
 
   defp sort_results(results) do

@@ -8,10 +8,8 @@ defmodule InchEx.JSON do
     @moduledoc false
 
     @doc false
-    def from_results(results) do
-      %{
-        "results" => Enum.map(results, &to_json/1)
-      }
+    def from_results(results, base \\ %{}) do
+      Map.put(base, "results", Enum.map(results, &to_json/1))
     end
 
     defp to_json(result) do
