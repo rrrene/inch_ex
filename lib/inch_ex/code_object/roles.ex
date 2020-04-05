@@ -161,5 +161,5 @@ defmodule InchEx.CodeObject.Roles do
   def title({"without_function_parameter_mention", {name, _count}}),
     do: "Misses mentioning function parameter `#{name}`"
 
-  def title({role, _}), do: "Missing title for `#{role}`."
+  def title(role_tuple), do: "<<Missing title for role `#{inspect(role_tuple)}`>>"
 end
