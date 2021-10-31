@@ -23,7 +23,10 @@ defmodule InchEx.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [mod: {InchEx.Application, []}, applications: [:bunt, :logger, :inets]]
+    [
+      mod: {InchEx.Application, []},
+      extra_applications: [:logger, :inets]
+    ]
   end
 
   # Dependencies can be Hex packages:
