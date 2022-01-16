@@ -23,7 +23,7 @@ defmodule InchEx.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [mod: {InchEx.Application, []}, applications: [:bunt, :logger, :inets]]
+    [mod: {InchEx.Application, []}, applications: [:bunt, :logger, :inets, :jason]]
   end
 
   # Dependencies can be Hex packages:
@@ -37,9 +37,9 @@ defmodule InchEx.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:jason, "~> 1.0"},
+      {:jason, "~> 1.2"},
       {:bunt, "~> 0.2"},
-      {:credo, "~> 0.10", only: :dev}
+      {:credo, "~> 1.6", only: :dev}
     ]
   end
 end
