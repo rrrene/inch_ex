@@ -78,6 +78,7 @@ defmodule InchEx.Docs do
   defp docstring(%{"en" => docstring}), do: docstring
   defp docstring(:hidden), do: false
   defp docstring(:none), do: nil
+  defp docstring(%{}), do: nil
 
   defp private?(%{"doc" => false}), do: true
   defp private?(_), do: false
