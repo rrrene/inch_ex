@@ -65,6 +65,12 @@ defmodule InchEx.Docs do
          module_name,
          source
        ) do
+    anno =
+      case anno do
+        value when is_number(value) -> value
+        value when is_list(value) -> anno[:location]
+      end
+
     %{
       "type" => to_string(kind),
       "name" => "#{module_name}.#{name}/#{arity}",
