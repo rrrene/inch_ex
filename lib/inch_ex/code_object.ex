@@ -8,16 +8,13 @@ defmodule InchEx.CodeObject do
   """
   @doc since: "2.0.0"
   def eval(list) when is_list(list) do
-    list =
-      list
-      |> Enum.map(&cast/1)
-      |> Enum.reject(&is_nil/1)
-
     list
+    |> Enum.map(&cast/1)
+    |> Enum.reject(&is_nil/1)
     |> Enum.map(&prepare(&1, list))
     |> Enum.map(&transform/1)
   end
-  
+
   # Ignore files without docs chunk
   def eval(nil), do: []
 
@@ -28,12 +25,11 @@ defmodule InchEx.CodeObject do
 
   def cast(item), do: item
 
-  def prepare(item, list) do
-    item
-    |> Map.put("children", children(item, list))
+  defp prepare(item, list) do
+    Map.put(item, "children", children(item, list))
   end
 
-  def transform(item) do
+  defp transform(item) do
     {roles, score, grade, priority} = evaluate(item)
 
     %{
@@ -49,7 +45,7 @@ defmodule InchEx.CodeObject do
     }
   end
 
-  def evaluate(item) do
+  defp evaluate(item) do
     roles = InchEx.CodeObject.Roles.run(item)
     score = InchEx.CodeObject.Score.run(roles, item["type"])
     priority = InchEx.CodeObject.Priority.run(roles, item["type"])
@@ -58,10 +54,7 @@ defmodule InchEx.CodeObject do
     {roles, score, grade, priority}
   end
 
-  def name(%{"module_id" => module_id, "id" => id}), do: "#{module_id}.#{id}"
-  def name(%{"id" => id}) when is_binary(id), do: id
-
-  def children(%{"name" => name}, list) do
+  defp children(%{"name" => name}, list) do
     count =
       list
       |> Enum.filter(&String.starts_with?(&1["name"], name))

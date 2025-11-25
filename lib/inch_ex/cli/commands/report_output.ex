@@ -11,7 +11,7 @@ defmodule InchEx.CLI.Commands.ReportOutput do
   end
 
   defp send_to_server(data, url) do
-    case :httpc.request(:post, {url, [], 'application/json', data}, [], []) do
+    case :httpc.request(:post, {url, [], ~c'application/json', data}, [], []) do
       {:ok, {_, _, body}} ->
         handle_success(body)
 
