@@ -1,5 +1,5 @@
 defmodule InchEx.CodeObject.Roles do
-  @ignored_metadata_keys [:defaults]
+  @ignored_metadata_keys [:behaviours, :defaults, :delegate_to, :source_annos, :source_path]
 
   @many_parameters_threshold 5
 
@@ -112,7 +112,7 @@ defmodule InchEx.CodeObject.Roles do
 
   defp functionparameter_with_withoutmention(_), do: nil
 
-  defp fun_params(%{"signature" => list}) do
+  defp fun_params(%{"signature" => list}) when is_list(list) do
     list =
       Enum.map(list, fn string ->
         {_fun_name, _meta, parameters} = Code.string_to_quoted!(string)

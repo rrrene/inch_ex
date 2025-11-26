@@ -56,7 +56,7 @@ defmodule InchEx.Docs do
       "name" => module_name,
       "doc" => docstring(moduledoc),
       "metadata" => metadata,
-      "location" => "#{source}:#{anno}"
+      "location" => "#{source}:#{cast_anno(anno)}"
     }
   end
 
@@ -65,21 +65,18 @@ defmodule InchEx.Docs do
          module_name,
          source
        ) do
-    anno =
-      case anno do
-        value when is_number(value) -> value
-        value when is_list(value) -> anno[:location]
-      end
-
     %{
       "type" => to_string(kind),
       "name" => "#{module_name}.#{name}/#{arity}",
       "signature" => signature,
       "doc" => docstring(doc),
       "metadata" => metadata,
-      "location" => "#{source}:#{anno}"
+      "location" => "#{source}:#{cast_anno(anno)}"
     }
   end
+
+  defp cast_anno(value) when is_number(value), do: value
+  defp cast_anno(value) when is_list(value), do: value[:location]
 
   defp docstring(%{"en" => docstring}), do: docstring
   defp docstring(:hidden), do: false

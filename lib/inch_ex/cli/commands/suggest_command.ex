@@ -29,7 +29,6 @@ defmodule InchEx.CLI.Commands.SuggestCommand do
     beam_file
     |> Docs.get_docs()
     |> CodeObject.eval()
-    |> dbg()
   end
 
   defp display_results(results, options) do

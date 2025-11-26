@@ -8,10 +8,13 @@ defmodule InchEx.CodeObject do
   """
   @doc since: "2.0.0"
   def eval(list) when is_list(list) do
-    list
-    |> Enum.map(&cast/1)
-    |> Enum.reject(&is_nil/1)
-    |> Enum.map(&prepare(&1, list))
+    cast_list =
+      list
+      |> Enum.map(&cast/1)
+      |> Enum.reject(&is_nil/1)
+
+    cast_list
+    |> Enum.map(&prepare(&1, cast_list))
     |> Enum.map(&transform/1)
   end
 
@@ -23,7 +26,9 @@ defmodule InchEx.CodeObject do
 
   def cast(%{"doc" => false}), do: nil
 
-  def cast(item), do: item
+  def cast(item) do
+    Map.merge(%{"name" => item["name"] || item["id"], "metadata" => %{}}, item)
+  end
 
   defp prepare(item, list) do
     Map.put(item, "children", children(item, list))
