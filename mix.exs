@@ -16,7 +16,25 @@ defmodule InchEx.Mixfile do
         }
       ],
       deps: deps()
-    ]
+    ] ++ project_cli_entry()
+  end
+
+  defp preferred_cli_env do
+    ["test.watch": :test]
+  end
+
+  if Version.match?(System.version(), ">= 1.19.0-dev") do
+    defp project_cli_entry do
+      []
+    end
+
+    def cli do
+      [preferred_cli_env: preferred_cli_env()]
+    end
+  else
+    defp project_cli_entry do
+      [preferred_cli_env: preferred_cli_env()]
+    end
   end
 
   def application do
@@ -26,8 +44,9 @@ defmodule InchEx.Mixfile do
   defp deps do
     [
       {:jason, "~> 1.2"},
-      {:bunt, "~> 0.2"},
-      {:credo, "~> 1.6", only: :dev}
+      {:bunt, "~> 1.0"},
+      {:credo, "~> 1.7", only: :dev},
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 end
