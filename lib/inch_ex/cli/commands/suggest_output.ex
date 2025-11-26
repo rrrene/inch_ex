@@ -58,7 +58,7 @@ defmodule InchEx.CLI.Commands.SuggestOutput do
       bg_color,
       " ",
       :black,
-      String.pad_trailing(description, term_width)
+      String.pad_trailing(description, term_width - 2)
     ])
 
     UI.puts([color, UI.edge()])

@@ -41,12 +41,12 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
       bg_color,
       " ",
       :black,
-      String.pad_trailing(name, term_width)
+      String.pad_trailing(name, term_width - 2)
     ])
 
     UI.puts([color, UI.edge(), :reset, " ", :faint, location])
 
-    UI.puts([color, :faint, UI.edge(), " ", :faint, String.pad_trailing("", term_width, "-")])
+    UI.puts([color, :faint, UI.edge(), " ", :faint, String.pad_trailing("", term_width - 2, "-")])
 
     Enum.each(roles, fn role_tuple ->
       score = Score.score(type, role_tuple, roles) || 0
@@ -91,7 +91,7 @@ defmodule InchEx.CLI.Commands.ExplainOutput do
       end
     end)
 
-    UI.puts([color, :faint, UI.edge(), " ", :faint, String.pad_trailing("", term_width, "-")])
+    UI.puts([color, :faint, UI.edge(), " ", :faint, String.pad_trailing("", term_width - 2, "-")])
 
     min_score = InchEx.CodeObject.Score.min_score()
     max_score = InchEx.CodeObject.Score.max_score()
