@@ -20,6 +20,10 @@ defmodule InchEx.CLI do
     {ReportCommand, argv}
   end
 
+  defp determine_command(["explain" | _] = argv) do
+    {ExplainCommand, argv}
+  end
+
   defp determine_command([maybe_file_and_line_no] = argv) do
     if String.match?(maybe_file_and_line_no, ~r/\:\d+$/) do
       {ExplainCommand, argv}
