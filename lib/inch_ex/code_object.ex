@@ -41,7 +41,7 @@ defmodule InchEx.CodeObject do
       "name" => item["name"],
       "location" => item["location"],
       "type" => item["type"],
-      "metadata" => item["metadata"],
+      "metadata" => Map.drop(item["metadata"], ignored_metadata_keys()),
       "doc" => item["doc"],
       "score" => score,
       "grade" => grade,
@@ -66,5 +66,10 @@ defmodule InchEx.CodeObject do
       |> Enum.count()
 
     count - 1
+  end
+
+  @doc false
+  def ignored_metadata_keys do
+    [:behaviours, :defaults, :delegate_to, :source_annos, :source_path]
   end
 end

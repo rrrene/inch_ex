@@ -1,6 +1,4 @@
 defmodule InchEx.CodeObject.Roles do
-  @ignored_metadata_keys [:behaviours, :defaults, :delegate_to, :source_annos, :source_path]
-
   @many_parameters_threshold 5
 
   @role_with_many_children "with_many_children"
@@ -21,6 +19,7 @@ defmodule InchEx.CodeObject.Roles do
   @role_function_parameter_with_mention "with_function_parameter_mention"
   @role_function_parameter_without_mention "without_function_parameter_mention"
 
+  alias InchEx.CodeObject
   alias InchEx.CodeObject.Docstring
 
   def run(item) do
@@ -90,7 +89,7 @@ defmodule InchEx.CodeObject.Roles do
 
   defp metadata(%{"metadata" => metadata}) do
     metadata
-    |> Map.drop(@ignored_metadata_keys)
+    |> Map.drop(CodeObject.ignored_metadata_keys())
     |> Enum.map(fn {key, _value} ->
       to_role(@role_with_metadata, key)
     end)
