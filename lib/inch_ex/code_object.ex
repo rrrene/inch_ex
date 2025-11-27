@@ -31,7 +31,9 @@ defmodule InchEx.CodeObject do
   end
 
   defp prepare(item, list) do
-    Map.put(item, "children", children(item, list))
+    item
+    |> Map.put("doc", delegated_doc(item, list))
+    |> Map.put("children", children(item, list))
   end
 
   defp transform(item) do
@@ -57,6 +59,19 @@ defmodule InchEx.CodeObject do
     grade = InchEx.CodeObject.Grade.run(score)
 
     {roles, score, grade, priority}
+  end
+
+  defp delegated_doc(%{"metadata" => %{delegate_to: {mod, fun, arity}}} = item, list) do
+    name = String.replace("#{mod}.#{fun}/#{arity}", ~r/^Elixir\./, "")
+
+    case Enum.find(list, &(&1["name"] == name)) do
+      nil -> item["doc"]
+      delegate -> delegate["doc"]
+    end
+  end
+
+  defp delegated_doc(%{"doc" => doc}, _list) do
+    doc
   end
 
   defp children(%{"name" => name}, list) do

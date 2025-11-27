@@ -82,6 +82,8 @@ defmodule InchEx.CodeObject.Score do
     div(base_score, count)
   end
 
+  def score("macro", role, roles), do: score("function", role, roles)
+
   def score(_, _, _), do: nil
 
   defp has_role?(roles, role_name) do
