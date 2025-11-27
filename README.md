@@ -55,6 +55,25 @@ Grade distribution (undocumented, C, B, A):  █  ▁ ▄ ▄
 ```
 
 
+To get more information, use `explain`:
+
+```bash
+$ mix inch Foo.complicated/5
+
+# Foo.complicated/5
+┃ lib/foo.ex:53
+┃ ----------------------------------------------------------------------------------------------------------------------------------
+┃ Has documentation                                        50     0
+┃ Has multiple code examples                               25     0
+┃ Misses mentioning function parameter `line`             (20)    0
+┃ Misses mentioning function parameter `max_length`       (20)    0
+┃ ----------------------------------------------------------------------------------------------------------------------------------
+┃ Score (min: 0, max: 100)                                 75     0
+┃
+
+```
+
+
 ## Philosophy
 
 Inch was created to help people document their code, therefore it may be more important to look at **what it does not** do than at what it does.
