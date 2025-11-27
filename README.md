@@ -2,8 +2,6 @@
 
 Inch for Elixir provides a Mix task to give you hints where to improve your inline docs. One Inch at a time.
 
-[Inch CI](http://inch-ci.org) is the corresponding web service that provides continuous coverage analysis for open source projects.
-
 
 
 ## What can it do?
@@ -21,7 +19,7 @@ Add Inch for Elixir as a dependency in your `mix.exs` file.
 ```elixir
 defp deps do
   [
-    {:inch_ex, github: "rrrene/inch_ex", only: [:dev, :test]}
+    {:inch_ex, "~> 2.0", only: [:dev, :test]}
   ]
 end
 ```
