@@ -4,12 +4,18 @@ defmodule InchEx.Docs do
   """
   @beam_file_pattern "*.beam"
 
-  def beam_files(files) when is_list(files) do
+  def beam_files(files, handle_fn \\ fn file -> file end)
+
+  def beam_files(files, handle_fn) when is_list(files) do
     files
+    |> Task.async_stream(handle_fn, timeout: :infinity, ordered: false)
+    |> Enum.flat_map(fn {:ok, result} -> result end)
   end
 
-  def beam_files(dir) do
-    Path.wildcard(Path.expand(@beam_file_pattern, dir))
+  def beam_files(dir, handle_fn) when is_binary(dir) do
+    files = Path.wildcard(Path.expand(@beam_file_pattern, dir))
+
+    beam_files(files, handle_fn)
   end
 
   @doc "Loads the docs from the given `file`."
