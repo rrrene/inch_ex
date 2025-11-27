@@ -114,7 +114,9 @@ defmodule InchEx.CodeObject.Roles do
   defp fun_params(%{"signature" => list}) when is_list(list) do
     list =
       Enum.map(list, fn string ->
-        {_fun_name, _meta, parameters} = Code.string_to_quoted!(string)
+        # Phoenix generates functions like "404" and "500" from `error_html` templates.
+        # These can not be parsed the way we are doing here without prefixing the name.
+        {_fun_name, _meta, parameters} = Code.string_to_quoted!("a#{string}")
 
         parameters
       end)
