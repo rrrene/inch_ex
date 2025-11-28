@@ -22,6 +22,7 @@ mix compile
 echo ""
 echo "== Running Inch ..."
 
+mix inch --format json
 mix inch --format json > ../$FIXTURE_NAME.json
 
 echo "== ... done"
