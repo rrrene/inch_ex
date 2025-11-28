@@ -84,6 +84,8 @@ defmodule InchEx.CodeObject.Score do
 
   def score("macro", role, roles), do: score("function", role, roles)
 
+  def score("type", role, roles), do: score("module", role, roles)
+
   def score(_, _, _), do: nil
 
   defp has_role?(roles, role_name) do
