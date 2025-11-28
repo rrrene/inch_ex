@@ -21,15 +21,15 @@ defmodule InchTest do
         }
 
   @doc delegate_to: {InchTest, :leds, 0}
-  defdelegate new(), to: InchTest, as: :leds
+  defdelegate some_delegated_doc(), to: InchTest, as: :leds
   @doc delegate_to: {InchTest, :leds, 1}
-  defdelegate new(count), to: InchTest, as: :leds
+  defdelegate some_delegated_doc(count), to: InchTest, as: :leds
   @doc delegate_to: {InchTest, :leds, 2}
-  defdelegate new(count, opts), to: InchTest, as: :leds
+  defdelegate some_delegated_doc(count, opts), to: InchTest, as: :leds
   @doc delegate_to: {InchTest, :leds, 3}
-  defdelegate new(count, leds, opts), to: InchTest, as: :leds
+  defdelegate some_delegated_doc(count, leds, opts), to: InchTest, as: :leds
   @doc delegate_to: {InchTest, :leds, 4}
-  defdelegate new(count, leds, opts, meta), to: InchTest, as: :leds
+  defdelegate some_delegated_doc(count, leds, opts, meta), to: InchTest, as: :leds
 
   @doc """
   Create a new led sequence of length 0.
@@ -113,5 +113,37 @@ defmodule InchTest do
   """
   defmacro some_macro(_) do
     nil
+  end
+
+  defmodule SomeGenServer do
+    use GenServer
+
+    # Callbacks
+
+    def start_link(default) when is_binary(default) do
+      GenServer.start_link(__MODULE__, default)
+    end
+
+    def child_spec(init_arg) do
+      %{
+        id: __MODULE__,
+        start: {__MODULE__, :start_link, [init_arg]}
+      }
+    end
+
+    @impl true
+    def init(stack) do
+      {:ok, stack}
+    end
+
+    @impl true
+    def handle_call(:pop, _from, [head | tail]) do
+      {:reply, head, tail}
+    end
+
+    @impl true
+    def handle_cast({:push, element}, state) do
+      {:noreply, [element | state]}
+    end
   end
 end

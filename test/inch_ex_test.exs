@@ -25,9 +25,11 @@ defmodule InchExTest do
   test "inch_test does work with inch_ex" do
     "inch_test"
     |> load_json()
-    |> assert_result("InchTest.new/1")
+    |> assert_result("InchTest.some_delegated_doc/1")
     |> assert_result("InchTest.some_macro/1")
     |> assert_result("InchTest.t/0", %{"grade" => "A"})
+    |> assert_result("InchTest.SomeGenServer")
+    |> refute_result("InchTest.SomeGenServer.init/1")
   end
 
   defp load_json(fixture_name) do
@@ -50,6 +52,12 @@ defmodule InchExTest do
     assert Enum.any?(list, fn item ->
              item["name"] == name && Map.intersect(item, expected) == expected
            end)
+
+    json
+  end
+
+  defp refute_result(%{"results" => list} = json, name) do
+    refute Enum.any?(list, &(&1["name"] == name))
 
     json
   end
