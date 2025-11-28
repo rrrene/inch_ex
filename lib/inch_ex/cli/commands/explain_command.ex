@@ -1,6 +1,4 @@
 defmodule InchEx.CLI.Commands.ExplainCommand do
-  alias InchEx.CLI.Options
-
   alias InchEx.CLI.Commands.ExplainOutput
 
   @doc false
@@ -13,10 +11,7 @@ defmodule InchEx.CLI.Commands.ExplainCommand do
   end
 
   def call(argv) do
-    options = Options.parse(argv)
-
-    options.path
-    |> InchEx.get_and_eval_docs()
+    InchEx.get_evaluated_docs()
     |> display_results(argv)
   end
 

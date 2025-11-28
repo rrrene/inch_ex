@@ -8,11 +8,16 @@ defmodule InchEx do
   def version, do: @version
 
   @doc false
-  def get_and_eval_docs(path) do
-    Docs.beam_files(path, fn beam_file ->
+  def get_evaluated_docs() do
+    Docs.beam_files(Mix.Project.compile_path(), fn beam_file ->
       beam_file
       |> Docs.get_docs()
       |> CodeObject.eval()
     end)
+  end
+
+  @doc false
+  def get_evaluated_docs("" <> name) do
+    Enum.find(get_evaluated_docs(), &(&1["name"] == name))
   end
 end

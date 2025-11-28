@@ -20,4 +20,37 @@ defmodule InchExTest do
     assert List.first(expected) == List.first(results)
     assert expected == results
   end
+
+  @tag :test_fixtures
+  test "inch_test does work with inch_ex" do
+    "inch_test"
+    |> load_json()
+    |> assert_result("InchTest.new/1")
+    |> assert_result("InchTest.some_macro/1")
+    |> assert_result("InchTest.t/0", %{"grade" => "A"})
+  end
+
+  defp load_json(fixture_name) do
+    with {:ok, content} <- File.read("test_fixtures/#{fixture_name}.json"),
+         {:ok, json} <- Jason.decode(content) do
+      json
+    else
+      _ ->
+        assert false, "Could not load fixture"
+    end
+  end
+
+  defp assert_result(%{"results" => list} = json, name) do
+    assert Enum.any?(list, &(&1["name"] == name))
+
+    json
+  end
+
+  defp assert_result(%{"results" => list} = json, name, expected) when is_map(expected) do
+    assert Enum.any?(list, fn item ->
+             item["name"] == name && Map.intersect(item, expected) == expected
+           end)
+
+    json
+  end
 end

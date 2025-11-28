@@ -2,6 +2,7 @@
 /deps
 /docs/all.json
 /.elixir_ls/
+/test_fixtures/*.json
 test.json
 erl_crash.dump
 *.ez
