@@ -1,9 +1,10 @@
 # Changelog
 
-## 2.1.0-rc.1
+## 2.1.0
 
 - Require Elixir `>= 1.15.0` (the goal is to support the last 5 minor Elixir releases)
 - Fix lots of bugs in newer versions of Elixir
+- Support macro docs, generated docs, delegated docs, type docs and numeric function names
 - Make `explain` also take the name as first argument
 - Add grade distribution to JSON output
 - Improve fallback role message for explain
